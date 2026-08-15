@@ -1,6 +1,5 @@
-import Wordmark from '@/components/brand/Wordmark';
-import ZayraSourceGlow from '@/components/brand/ZayraSourceGlow';
-import { useAtmoVariant } from '@/components/brand/AtmosphereSwitch';
+import ElectricWordmark from '@/components/brand/ElectricWordmark';
+import ConstellationField from '@/components/hero/ConstellationField';
 import { ROSTER } from '@/lib/roster';
 
 /**
@@ -12,60 +11,61 @@ import { ROSTER } from '@/lib/roster';
  */
 
 export function Landing() {
-  // Candidate preview calls for the tagline in muted gold; the locked
-  // treatment is chrome.
-  const taglineTone = useAtmoVariant() === 'candidate' ? 'gold' : 'chrome';
-
   return (
     <main className="relative z-10">
-      {/* HERO ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 pt-20 pb-28">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          <div>
-            <p className="mb-5 text-xs tracking-[0.28em] text-[#f5b53d]/70 uppercase">
-              Founder Operating System
-            </p>
+      {/* HERO — locked treatment ---------------------------------------
+          The section paints its own opaque ground, which keeps the shared
+          gold laser atmosphere off this moment entirely: the starfield is
+          this section's atmosphere. Gold resumes below the fold. */}
+      <section className="relative flex min-h-[86vh] w-full flex-col justify-end overflow-hidden bg-black">
+        {/* Optional photographic plate. Absent from the repo, so it removes
+            itself rather than leaving a broken frame — drop
+            public/zayra-office.jpg in and it appears with no code change. */}
+        <img
+          src="/zayra-office.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 z-0 h-full w-full object-cover brightness-[0.78] saturate-[1.05]"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
 
-            <h1 className="chrome-text mb-6 text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
-              Start the company you keep saying you'll start.
-            </h1>
+        <ConstellationField className="absolute inset-0 z-10 h-full w-full mix-blend-screen" />
 
-            <p className="mb-8 max-w-md text-lg leading-relaxed text-white/60">
-              Zayra works alongside you — from the first idea through forming
-              the entity and getting to a real launch.
-            </p>
+        <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/60 via-black/5 via-25% to-black/85" />
 
-            <div className="mb-10">
-              <Wordmark className="text-3xl sm:text-4xl" tone={taglineTone} />
-            </div>
-
-            <a
-              id="access"
-              href="#access"
-              className="inline-flex items-center gap-2 rounded-full border border-[#f5b53d]/50 bg-[#f5b53d]/10 px-7 py-3 font-medium text-[#ffd47a] transition hover:border-[#f5b53d] hover:bg-[#f5b53d]/20"
-            >
-              Request alpha access
-            </a>
-            <p className="mt-3 text-xs text-white/35">
-              Auto AI Technologies is in private alpha.
-            </p>
+        <div className="relative z-40 px-4 pb-14 text-center">
+          <div className="mb-4 text-xs tracking-[0.3em] text-[#5fd4c4] uppercase">
+            private founder alpha &middot; live
           </div>
 
-          {/* Zayra's light is sourced from her, fading into the gold
-              atmosphere at the edges. The render itself is not in this repo
-              yet — the frame below marks where it goes. */}
-          <ZayraSourceGlow className="mx-auto w-full max-w-sm">
-            <div className="flex aspect-[3/4] items-center justify-center rounded-3xl border border-dashed border-[#5ff2ff]/25 bg-white/[0.02]">
-              <span className="px-6 text-center text-xs leading-relaxed tracking-wider text-[#5ff2ff]/50 uppercase">
-                Zayra render
-                <span className="mt-2 block text-white/25 normal-case">
-                  asset not yet added to this repo
-                </span>
-              </span>
-            </div>
-          </ZayraSourceGlow>
+          <ElectricWordmark size="hero" />
+
+          <p className="font-body mx-auto mt-8 max-w-md text-sm leading-relaxed font-light text-gray-400 md:text-base">
+            Zayra plans, drafts, and moves with you. Chachy hunts your next deal
+            while you sleep. One system, every founder covered.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              href="#access"
+              className="hero-cta rounded-lg bg-gradient-to-r from-[#eaffff] to-[#3fd6ff] px-7 py-3.5 text-sm font-medium text-[#04222b] shadow-[0_0_26px_rgba(63,214,255,0.35)]"
+            >
+              Enter Founder OS &rarr;
+            </a>
+            <button
+              type="button"
+              className="rounded-lg border border-white/20 bg-black/30 px-7 py-3.5 text-sm text-gray-200 transition hover:border-white/40 hover:bg-black/50"
+            >
+              Watch the trailer
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* ACCESS anchor for the primary CTA. */}
+      <div id="access" className="scroll-mt-24" />
 
       {/* WHAT ZAYRA IS -------------------------------------------------- */}
       <section id="what-zayra-is" className="mx-auto max-w-6xl px-6 py-20">

@@ -1,5 +1,23 @@
 @import 'tailwindcss';
 
+/* Chakra Petch is self-hosted rather than pulled from a font CDN: the hero
+   wordmark is the brand's single visual anchor and must not silently fall
+   back to a system face if an external host is slow or blocked. */
+@font-face {
+  font-family: 'Chakra Petch';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/chakra-petch-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/chakra-petch-700.woff2') format('woff2');
+}
+
 /* ==========================================================================
    Auto AI Technologies™ — brand tokens
    --------------------------------------------------------------------------
@@ -35,6 +53,9 @@
 
   --font-display: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Scoped to the hero wordmark so the rest of the shell keeps its existing
+     type. Widening this to --font-display would restyle nav and logo. */
+  --font-hero: 'Chakra Petch', 'Inter Tight', system-ui, sans-serif;
 }
 
 html,
@@ -170,11 +191,134 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* ==========================================================================
+   HERO WORDMARK — locked treatment. Do not restyle without sign-off.
+   Chrome stacked NEVER / BUILD / ALONE with the I and A as live current.
+   ========================================================================== */
+
+/* Chrome ramp, per the approved treatment. Background is oversized vertically
+   so the highlight can be swept through it as the words land. */
+.hero-chrome {
+  background-image: linear-gradient(
+    180deg,
+    #fdfdfd 0%,
+    #b9bcc2 42%,
+    #6b6f76 50%,
+    #d8dade 58%,
+    #8b8e94 100%
+  );
+  background-size: 100% 220%;
+  background-position: 50% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.8));
+}
+
+/* The bolt glyphs. Voltage travels through the letter rather than sitting on
+   it: the gradient scrolls vertically while the halo breathes in step. */
+.hero-bolt {
+  background-image: linear-gradient(
+    180deg,
+    #3fd6ff 0%,
+    #eaffff 28%,
+    #ffffff 46%,
+    #eaffff 64%,
+    #3fd6ff 100%
+  );
+  background-size: 100% 340%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation:
+    current-travel 3.2s linear infinite,
+    bolt-breathe 3.6s ease-in-out infinite;
+}
+
+@keyframes current-travel {
+  from {
+    background-position: 50% 0%;
+  }
+  to {
+    background-position: 50% 340%;
+  }
+}
+
+@keyframes bolt-breathe {
+  0%,
+  100% {
+    text-shadow:
+      0 0 6px #fff,
+      0 0 18px #3fd6ff,
+      0 0 40px #3fd6ff,
+      0 0 90px rgba(63, 214, 255, 0.85),
+      0 0 160px rgba(63, 214, 255, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 8px #fff,
+      0 0 26px #3fd6ff,
+      0 0 58px #3fd6ff,
+      0 0 120px rgba(63, 214, 255, 1),
+      0 0 200px rgba(63, 214, 255, 0.65);
+  }
+}
+
+/* Load assembly — the words arrive with weight, chrome catching light as they
+   settle. Whole sequence finishes inside 1.5s. */
+@keyframes word-land {
+  0% {
+    opacity: 0;
+    transform: translateY(32px) scale(0.955);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chrome-catch {
+  0% {
+    background-position: 50% 175%;
+  }
+  100% {
+    background-position: 50% 50%;
+  }
+}
+
+.hero-line {
+  animation: word-land 0.72s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+}
+
+.hero-chrome-catch {
+  animation: chrome-catch 0.95s ease-out both;
+}
+
+/* Charged hover on the primary CTA. */
+.hero-cta {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+  box-shadow:
+    0 0 46px rgba(63, 214, 255, 0.62),
+    0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .laser-line,
   .source-glow,
   .electric-glyph,
-  .ice-breathe {
+  .ice-breathe,
+  .hero-bolt,
+  .hero-line,
+  .hero-chrome-catch {
     animation: none !important;
   }
 }
