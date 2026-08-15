@@ -1,0 +1,459 @@
+<title>Founder OS Route Map</title>
+<style>
+  /* ---- Tokens: light is the bare :root, dark redefines only tokens ---- */
+  :root {
+    --ground: #f7f5f1;
+    --surface: #ffffff;
+    --surface-2: #f0ede7;
+    --line: #e2ded5;
+    --line-strong: #cdc7ba;
+    --ink: #17161c;
+    --ink-mid: #4a4753;
+    --ink-soft: #77737f;
+    --gold: #9a6a10;
+    --gold-bright: #b8811c;
+    --gold-wash: rgba(245, 181, 61, 0.14);
+    --cyan: #0d7f92;
+    --cyan-wash: rgba(34, 211, 238, 0.13);
+    --ember: #b23a22;
+    --ember-wash: rgba(226, 93, 63, 0.12);
+    --shadow: 0 1px 2px rgba(20, 16, 8, 0.06), 0 8px 24px rgba(20, 16, 8, 0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #08080c;
+      --surface: #101017;
+      --surface-2: #16161f;
+      --line: #23222d;
+      --line-strong: #34333f;
+      --ink: #edecf2;
+      --ink-mid: #a8a5b4;
+      --ink-soft: #7d7a8a;
+      --gold: #f5b53d;
+      --gold-bright: #ffd47a;
+      --gold-wash: rgba(245, 181, 61, 0.1);
+      --cyan: #5ff2ff;
+      --cyan-wash: rgba(34, 211, 238, 0.1);
+      --ember: #ff8266;
+      --ember-wash: rgba(227, 93, 63, 0.13);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #08080c;
+    --surface: #101017;
+    --surface-2: #16161f;
+    --line: #23222d;
+    --line-strong: #34333f;
+    --ink: #edecf2;
+    --ink-mid: #a8a5b4;
+    --ink-soft: #7d7a8a;
+    --gold: #f5b53d;
+    --gold-bright: #ffd47a;
+    --gold-wash: rgba(245, 181, 61, 0.1);
+    --cyan: #5ff2ff;
+    --cyan-wash: rgba(34, 211, 238, 0.1);
+    --ember: #ff8266;
+    --ember-wash: rgba(227, 93, 63, 0.13);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+  /* ---- Header: one restrained nod to the product's moving gold field ---- */
+  .masthead {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    margin-bottom: 3rem;
+  }
+  .masthead .inner {
+    position: relative; z-index: 1;
+    max-width: 60rem; margin: 0 auto;
+    padding: 3.5rem 1.5rem 3rem;
+  }
+  .beam {
+    position: absolute; left: -30%; width: 160%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5; rotate: -9deg;
+    animation: drift 26s linear infinite alternate;
+  }
+  .beam.b1 { top: 34%; }
+  .beam.b2 { top: 68%; animation-duration: 38s; animation-delay: -8s; opacity: 0.3; }
+  @keyframes drift { from { transform: translateX(-16%); } to { transform: translateX(16%); } }
+
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin: 0 0 0.9rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05;
+    letter-spacing: -0.03em; font-weight: 800;
+    margin: 0 0 1rem; text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.05rem; color: var(--ink-mid);
+    max-width: 44rem; margin: 0;
+  }
+
+  h2 {
+    font-size: 1.5rem; letter-spacing: -0.02em; font-weight: 700;
+    margin: 3.5rem 0 0.5rem; text-wrap: balance;
+  }
+  h2:first-of-type { margin-top: 0; }
+  .sub { color: var(--ink-soft); margin: 0 0 1.5rem; font-size: 0.95rem; }
+
+  h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 0.35rem; letter-spacing: -0.01em; }
+
+  p { margin: 0 0 1rem; }
+  .prose { max-width: 46rem; }
+
+  code, .path {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.82em;
+  }
+
+  /* ---- Decision cards: rail encodes urgency, not decoration ---- */
+  .decision {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--ember);
+    border-radius: 4px; padding: 1.4rem 1.5rem;
+    margin-bottom: 1rem; box-shadow: var(--shadow);
+  }
+  .decision.access { border-left-color: var(--gold); }
+  .tag {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.2rem 0.5rem; border-radius: 3px; margin-bottom: 0.7rem;
+    background: var(--ember-wash); color: var(--ember);
+  }
+  .decision.access .tag { background: var(--gold-wash); color: var(--gold); }
+  .decision p:last-child { margin-bottom: 0; }
+
+  .compare {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.75rem; margin: 1rem 0;
+  }
+  .col {
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 4px; padding: 0.9rem 1rem;
+  }
+  .col h4 {
+    margin: 0 0 0.6rem; font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-soft); font-weight: 700;
+  }
+  .col ul { margin: 0; padding-left: 1.1rem; }
+  .col li { font-size: 0.88rem; margin-bottom: 0.3rem; color: var(--ink-mid); }
+  .col li b { color: var(--ink); font-weight: 600; }
+
+  /* ---- Route clusters: absorbed paths grouped under each destination ---- */
+  .dest {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1.1rem 1.25rem; margin-bottom: 0.6rem;
+  }
+  .dest-head {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    flex-wrap: wrap; margin-bottom: 0.55rem;
+  }
+  .dest-path {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.95rem; font-weight: 700; color: var(--gold-bright);
+  }
+  .dest-name { font-weight: 600; font-size: 0.95rem; }
+  .count {
+    margin-left: auto; font-size: 0.72rem; color: var(--ink-soft);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .dest-note { font-size: 0.88rem; color: var(--ink-mid); margin: 0 0 0.7rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .chip {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem; padding: 0.16rem 0.45rem;
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 3px; color: var(--ink-soft);
+  }
+
+  .defer {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: 4px; padding: 1.1rem 1.25rem; margin-bottom: 0.6rem;
+  }
+  .defer h3 { color: var(--ink-mid); }
+
+  /* ---- Verification table ---- */
+  .scroll { overflow-x: auto; margin: 1rem 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.9rem; }
+  th {
+    text-align: left; font-size: 0.68rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-soft);
+    padding: 0 0.8rem 0.5rem 0; border-bottom: 1px solid var(--line-strong);
+    font-weight: 700;
+  }
+  td { padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  .yes { color: var(--cyan); font-weight: 600; }
+  .no { color: var(--ember); font-weight: 600; }
+
+  .foot {
+    margin-top: 3.5rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem; color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beam { animation: none; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="beam b1"></div>
+  <div class="beam b2"></div>
+  <div class="inner">
+    <p class="eyebrow">Auto AI Technologies · Track 3 rebuild</p>
+    <h1>Founder OS Route Map</h1>
+    <p class="standfirst">
+      The brand shell is built and verified. Before any pages get ported, three
+      things need your call — two of them are conflicts between the kickoff brief
+      and what's actually live.
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>Decisions needed</h2>
+  <p class="sub">Nothing below is resolved on my own — flagging as instructed.</p>
+
+  <div class="decision">
+    <span class="tag">Conflict · pricing</span>
+    <h3>The four prices in the brief aren't in the live app</h3>
+    <p class="prose">
+      The brief lists Zayra Launch File $149, Entity Launchpad $599, Business
+      Launch Kit $999, and Founder OS Support $99/mo as live and already selling.
+      I read <code>src/lib/plans.ts</code> in the Lovable project — the file that
+      calls itself the one source of truth for every price in the product. None
+      of those four products appear in it, under those names or those amounts.
+    </p>
+    <div class="compare">
+      <div class="col">
+        <h4>Brief says</h4>
+        <ul>
+          <li><b>Zayra Launch File</b> — $149 one-time</li>
+          <li><b>Entity Launchpad</b> — $599 one-time</li>
+          <li><b>Business Launch Kit</b> — $999 one-time</li>
+          <li><b>Founder OS Support</b> — $99/mo</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Live catalog says</h4>
+        <ul>
+          <li><b>AI Builder</b> — $29/mo</li>
+          <li><b>Dual Launch + Agents</b> — $99/mo</li>
+          <li><b>All Access</b> — $299/mo</li>
+          <li><b>Formation</b> — platform fee waived, state fees only</li>
+          <li><b>Registered Agent</b> — $149/yr · <b>EIN</b> — $79</li>
+          <li><b>DFY Build</b> — $2,500–$5,000</li>
+        </ul>
+      </div>
+    </div>
+    <p class="prose">
+      The only overlaps are coincidental: $99 exists but as a monthly tier, and
+      $149 exists but as an annual registered-agent fee. I've built no pricing UI
+      at all rather than pick a list — a second price list is exactly what the
+      brief said not to create. <b>Which catalog is real?</b>
+    </p>
+  </div>
+
+  <div class="decision">
+    <span class="tag">Conflict · brand</span>
+    <h3>The gold atmosphere isn't live in Lovable — it's purple</h3>
+    <p class="prose">
+      The brief says the gold/amber moving laser field is already live in the
+      Lovable app and should be kept. It isn't. I read
+      <code>ZayraBrandBackground.tsx</code>: the streaks are purple
+      <code>rgba(167,85,247)</code>, violet and cyan, over a full-page cosmic
+      indigo wash. There is no gold in it, and the indigo covers the whole page —
+      which is the thing the containment rule forbids.
+    </p>
+    <p class="prose">
+      I built this app to the <b>locked rules</b>, not to Lovable: gold field,
+      moving, on black; indigo contained to the Ask&nbsp;Zayra panel only. So the
+      two apps now look different on purpose. Worth telling the Lovable session
+      its background is out of compliance.
+    </p>
+  </div>
+
+  <div class="decision access">
+    <span class="tag">Blocked · repo access</span>
+    <h3>I can't push — the GitHub App is read-only here</h3>
+    <p class="prose">
+      <code>AtlRay/auto-ai-frontend</code> exists and is empty. Both push paths
+      fail: git over HTTPS returns <code>403</code>, and the GitHub API returns
+      <code>403 Resource not accessible by integration</code>. The commit is made
+      locally and ready to go the moment write access is granted. Nothing is lost,
+      but nothing is on GitHub yet either.
+    </p>
+  </div>
+
+  <h2>Proposed map: 64 destinations → 10</h2>
+  <p class="sub">
+    Counted from the live <code>App.tsx</code> route table: ~95 route
+    declarations, 31 of which are already redirects papering over earlier
+    consolidations. That leaves roughly 64 real destinations.
+  </p>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/</span><span class="dest-name">Landing</span>
+      <span class="count">absorbs 3</span>
+    </div>
+    <p class="dest-note">Hero, what Zayra is, the roster, and the Core teaser in one scroll. Built.</p>
+    <div class="chips"><span class="chip">/</span><span class="chip">/trailer</span><span class="chip">/lawns-and-trees</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/access</span><span class="dest-name">One intake door</span>
+      <span class="count">absorbs 4</span>
+    </div>
+    <p class="dest-note">Waitlist, invite codes, and DFY intake are the same form with a different reason for being there. One route, one purpose selector.</p>
+    <div class="chips"><span class="chip">/waitlist</span><span class="chip">/invite/:code</span><span class="chip">/dfy-intake</span><span class="chip">/lead-capture</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/pricing</span><span class="dest-name">Canonical menu</span>
+      <span class="count">blocked</span>
+    </div>
+    <p class="dest-note">Not built — waiting on the pricing decision above.</p>
+    <div class="chips"><span class="chip">/pricing</span><span class="chip">/plans</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/the-core</span><span class="dest-name">Community</span>
+      <span class="count">stands alone</span>
+    </div>
+    <p class="dest-note">Own product family, own tiers, Discord fulfilment. Earns its own route.</p>
+    <div class="chips"><span class="chip">/the-core</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/dashboard</span><span class="dest-name">Command center</span>
+      <span class="count">absorbs 7</span>
+    </div>
+    <p class="dest-note">The single signed-in home. Every one of these is already a dashboard of the same data.</p>
+    <div class="chips"><span class="chip">/empire</span><span class="chip">/home</span><span class="chip">/analytics</span><span class="chip">/mission-control</span><span class="chip">/profile</span><span class="chip">/system-status</span><span class="chip">/leaderboard</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/build</span><span class="dest-name">Founder Engine</span>
+      <span class="count">absorbs 14</span>
+    </div>
+    <p class="dest-note">Already a step flow — most of these are literally <code>?step=</code> redirects today. Make the steps the only surface.</p>
+    <div class="chips"><span class="chip">/founder</span><span class="chip">/ai-builder</span><span class="chip">/onboarding</span><span class="chip">/leads</span><span class="chip">/domain-scout</span><span class="chip">/dual-launch</span><span class="chip">/token-center</span><span class="chip">/pump-station</span><span class="chip">/game-forge</span><span class="chip">/commerce-launchpad</span><span class="chip">/workbench</span><span class="chip">/intelligence</span><span class="chip">/zayra/memory</span><span class="chip">/zayra-vision</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/formation</span><span class="dest-name">Entity + agent</span>
+      <span class="count">absorbs 9</span>
+    </div>
+    <p class="dest-note">One flow with states, not nine routes. Keeps its own signed-out view so returning founders can see orders.</p>
+    <div class="chips"><span class="chip">/entity-launchpad</span><span class="chip">/llc-formation</span><span class="chip">/my-llcs</span><span class="chip">/registered-agent</span><span class="chip">/registered-agent/return</span><span class="chip">/checkout/return</span><span class="chip">/entity-launchpad/legacy</span><span class="chip">/wallet/purchases</span><span class="chip">/wallet/credits</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/operate</span><span class="dest-name">Running the business</span>
+      <span class="count">absorbs 7</span>
+    </div>
+    <p class="dest-note">Already a shell with children. Fold the loose growth pages into it.</p>
+    <div class="chips"><span class="chip">/operate/*</span><span class="chip">/smart-email-marketing</span><span class="chip">/social-media-ai</span><span class="chip">/welcome-emails</span><span class="chip">/ambassador</span><span class="chip">/green-book</span><span class="chip">/green-book/*</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/auth</span><span class="dest-name">Sign in / up / callback</span>
+      <span class="count">absorbs 3</span>
+    </div>
+    <div class="chips"><span class="chip">/login</span><span class="chip">/signup</span><span class="chip">/auth/callback</span></div>
+  </div>
+
+  <div class="dest">
+    <div class="dest-head">
+      <span class="dest-path">/legal</span><span class="dest-name">Terms, privacy, unsubscribe</span>
+      <span class="count">absorbs 4</span>
+    </div>
+    <p class="dest-note">Required surfaces. Low traffic, so one route with anchors.</p>
+    <div class="chips"><span class="chip">/terms</span><span class="chip">/privacy</span><span class="chip">/unsubscribe</span><span class="chip">/install</span></div>
+  </div>
+
+  <h2>Clusters I'd drop from this rebuild</h2>
+  <p class="sub">
+    These are the page sprawl. Each also collides with an alpha safety lock that
+    is deliberately on, so they can't ship honestly right now anyway.
+  </p>
+
+  <div class="defer">
+    <h3>Zayra Media — 9 routes</h3>
+    <p class="dest-note">The media subpage sprawl the IA audit flagged. Auto-posting is locked off, so most of it can't do anything yet. Recommend: cut entirely, revisit as one route later.</p>
+    <div class="chips"><span class="chip">/zayra-media</span><span class="chip">+ alerts</span><span class="chip">projects</span><span class="chip">timeline</span><span class="chip">wallet</span><span class="chip">providers</span><span class="chip">review</span><span class="chip">leadership</span><span class="chip">/media-vault</span></div>
+  </div>
+
+  <div class="defer">
+    <h3>OpportunityOS — 11 routes</h3>
+    <p class="dest-note">Trading and research scraping are both locked off. Shipping a research workspace that can't research would be the fabrication problem in UI form.</p>
+    <div class="chips"><span class="chip">/opportunity-os</span><span class="chip">+ research</span><span class="chip">watchlist</span><span class="chip">paper</span><span class="chip">zayra-alpha</span><span class="chip">academy</span><span class="chip">opportunities</span><span class="chip">onboarding</span><span class="chip">admin</span><span class="chip">alerts</span></div>
+  </div>
+
+  <div class="defer">
+    <h3>Admin + odds and ends — 5 routes</h3>
+    <p class="dest-note">Admin screens fold into one gated <code>/admin</code>. <code>/the-frequency</code> already redirects home in the live app — its backing table is missing, so it should not be ported at all.</p>
+    <div class="chips"><span class="chip">/admin/entity-launchpad</span><span class="chip">/admin/registered-agents</span><span class="chip">/zayra-cloud/*</span><span class="chip">/zayra-voice</span><span class="chip">/the-frequency</span></div>
+  </div>
+
+  <h2>What's actually verified</h2>
+  <p class="sub">Checked with real commands and real tool output today, not carried over from the brief.</p>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Claim</th><th>Status</th><th>How</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Supabase ref <code>kjjgepsbjgnxqisojgta</code></td><td class="yes">Confirmed</td><td>Read from the Lovable project's <code>.env</code></td></tr>
+        <tr><td>Key is anon, not service-role</td><td class="yes">Confirmed</td><td>JWT decodes to <code>role: anon</code>; client rejects anything else</td></tr>
+        <tr><td>Vercel team ID</td><td class="yes">Confirmed</td><td>Matches brief; only <code>chachy-hunter-core</code> exists — new project still needed</td></tr>
+        <tr><td>Typecheck + production build</td><td class="yes">Clean</td><td><code>tsc -b</code> and <code>vite build</code> both pass</td></tr>
+        <tr><td>Page renders, no console errors</td><td class="yes">Confirmed</td><td>Headless Chromium load, zero errors</td></tr>
+        <tr><td>Gold field is actually moving</td><td class="yes">Confirmed</td><td>Queried <code>getAnimations()</code> — <code>playState: running</code></td></tr>
+        <tr><td>Containment rule holds</td><td class="yes">Confirmed</td><td>Screenshot with panel open — indigo stays inside it</td></tr>
+        <tr><td>Deployed to Vercel</td><td class="no">Not done</td><td>Blocked on repo write access</td></tr>
+        <tr><td>Zayra character render</td><td class="no">Missing</td><td>Asset isn't in this repo — placeholder frame marks the spot</td></tr>
+        <tr><td>Vera, Cache, Aegis roles</td><td class="no">Unknown</td><td>Names shown, roles left blank rather than invented</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="foot">
+    Built on <code>claude/auto-ai-frontend-rebuild-ojyjp8</code> · commit
+    <code>7b11be9</code> · local only until write access lands. Nothing here
+    touches the backend, and nothing ships without your say-so.
+  </p>
+</div>
