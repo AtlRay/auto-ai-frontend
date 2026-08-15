@@ -11,12 +11,17 @@ type Props = {
   className?: string;
   /** Include the trailing period. The tagline is written "Never Build Alone." */
   withPeriod?: boolean;
+  /**
+   * 'chrome' is the locked treatment. 'gold' exists only for the candidate
+   * atmosphere preview, which calls for a muted-gold tagline.
+   */
+  tone?: 'chrome' | 'gold';
 };
 
-export function Wordmark({ className = '', withPeriod = true }: Props) {
+export function Wordmark({ className = '', withPeriod = true, tone = 'chrome' }: Props) {
   return (
     <span
-      className={`chrome-text font-[var(--font-display)] font-semibold tracking-tight ${className}`}
+      className={`${tone === 'gold' ? 'gold-text' : 'chrome-text'} font-[var(--font-display)] font-semibold tracking-tight ${className}`}
       // Screen readers get the plain tagline, not the split glyphs.
       aria-label={`Never Build Alone${withPeriod ? '.' : ''}`}
     >

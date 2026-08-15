@@ -1,5 +1,6 @@
 import Wordmark from '@/components/brand/Wordmark';
 import ZayraSourceGlow from '@/components/brand/ZayraSourceGlow';
+import { useAtmoVariant } from '@/components/brand/AtmosphereSwitch';
 
 /**
  * Landing page.
@@ -27,6 +28,10 @@ const ROSTER = [
 ];
 
 export function Landing() {
+  // Candidate preview calls for the tagline in muted gold; the locked
+  // treatment is chrome.
+  const taglineTone = useAtmoVariant() === 'candidate' ? 'gold' : 'chrome';
+
   return (
     <main className="relative z-10">
       {/* HERO ---------------------------------------------------------- */}
@@ -47,7 +52,7 @@ export function Landing() {
             </p>
 
             <div className="mb-10">
-              <Wordmark className="text-3xl sm:text-4xl" />
+              <Wordmark className="text-3xl sm:text-4xl" tone={taglineTone} />
             </div>
 
             <a

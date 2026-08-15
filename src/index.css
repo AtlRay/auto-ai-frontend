@@ -79,6 +79,17 @@ body {
   }
 }
 
+/* Ice-blue breathing — candidate atmosphere preview only. */
+@keyframes ice-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* Electric current running through the A / I glyphs. */
 @keyframes current-flicker {
   0%,
@@ -115,6 +126,27 @@ body {
   will-change: opacity, transform;
 }
 
+.ice-breathe {
+  animation: ice-breathe 9s ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* Muted gold tagline — candidate atmosphere preview only. The locked
+   treatment is chrome; this variant exists for side-by-side comparison. */
+.gold-text {
+  background-image: linear-gradient(
+    180deg,
+    #efd08f 0%,
+    #d9a93f 38%,
+    #b8871f 72%,
+    #d4b160 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 .electric-glyph {
   color: var(--color-cyan-source);
   animation: current-flicker 4.5s ease-in-out infinite;
@@ -141,7 +173,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .laser-line,
   .source-glow,
-  .electric-glyph {
+  .electric-glyph,
+  .ice-breathe {
     animation: none !important;
   }
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import AtmosphereLayer from '@/components/brand/AtmosphereLayer';
+import AtmosphereSwitch, { AtmoToggle } from '@/components/brand/AtmosphereSwitch';
 import AskZayraPanel from '@/components/zayra/AskZayraPanel';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -13,8 +13,9 @@ import Landing from '@/pages/Landing';
 export function App() {
   return (
     <BrowserRouter>
-      {/* Shared gold atmosphere sits behind every page. */}
-      <AtmosphereLayer />
+      {/* Locked gold atmosphere by default; `?atmo=candidate` previews the
+          exploratory variant. Public pages only. */}
+      <AtmosphereSwitch />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <SiteHeader />
@@ -28,6 +29,7 @@ export function App() {
       </div>
 
       <AskZayraPanel />
+      <AtmoToggle />
     </BrowserRouter>
   );
 }
