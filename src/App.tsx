@@ -3,33 +3,69 @@ import AtmosphereSwitch, { AtmoToggle } from '@/components/brand/AtmosphereSwitc
 import AskZayraPanel from '@/components/zayra/AskZayraPanel';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
+import AppShell from '@/components/app/AppShell';
+import NotPortedYet from '@/pages/app/NotPortedYet';
+import { ALL_DESTINATIONS } from '@/config/destinations';
 import Landing from '@/pages/Landing';
 import Usage from '@/pages/Usage';
 
 /**
- * Only the landing route exists so far. The consolidated route map is still
- * awaiting sign-off — the previous app's ~60 routes are deliberately NOT
- * ported, and pages get added once the map is agreed.
+ * Two shells.
+ *
+ * Public pages keep the marketing layout — site header, hero, footer.
+ * Signed-in destinations render inside AppShell, which mirrors the live
+ * Lovable app's sidebar + header so the eventual switch is invisible.
+ *
+ * Destination routes come from the shared registry, so nav and router can
+ * never drift apart. Screens are ported in order; until each lands its route
+ * renders an honest placeholder rather than mocked content.
  */
+
+function PublicLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative z-10 flex min-h-screen flex-col">
+      <SiteHeader />
+      <div className="flex-1">{children}</div>
+      <SiteFooter />
+    </div>
+  );
+}
+
 export function App() {
   return (
     <BrowserRouter>
       {/* Locked gold atmosphere by default; `?atmo=candidate` previews the
-          exploratory variant. Public pages only. */}
+          exploratory variant. The hero paints over it by design. */}
       <AtmosphereSwitch />
 
-      <div className="relative z-10 flex min-h-screen flex-col">
-        <SiteHeader />
-        <div className="flex-1">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            {/* Folds into /dashboard once the route map is signed off. */}
-            <Route path="/usage" element={<Usage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-        <SiteFooter />
-      </div>
+      <Routes>
+        {/* Public */}
+        <Route
+          path="/"
+          element={
+            <PublicLayout>
+              <Landing />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/usage"
+          element={
+            <PublicLayout>
+              <Usage />
+            </PublicLayout>
+          }
+        />
+
+        {/* Signed-in destinations, inside the ported app shell. */}
+        <Route element={<AppShell />}>
+          {ALL_DESTINATIONS.map((d) => (
+            <Route key={d.url} path={`${d.url}/*`} element={<NotPortedYet />} />
+          ))}
+        </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       <AskZayraPanel />
       <AtmoToggle />
