@@ -25,19 +25,25 @@ export function AtmosphereSwitch() {
   return variant === 'candidate' ? <CandidateAtmosphere /> : <AtmosphereLayer />;
 }
 
-/** Small on-screen control so the two can be flipped without editing URLs. */
+/**
+ * Dev-only control for flipping the atmosphere.
+ *
+ * Nothing sits on the locked hero: this renders only behind `?dev=1`. The
+ * atmosphere itself still switches on `?atmo=candidate` alone, so the
+ * candidate can be reviewed with no chrome on screen at all.
+ */
 export function AtmoToggle() {
+  const [params] = useSearchParams();
   const variant = useAtmoVariant();
   const { pathname } = useLocation();
   const isCandidate = variant === 'candidate';
 
-  // The atmosphere comparison is a landing-page exercise — don't clutter
-  // other routes with preview scaffolding.
+  if (params.get('dev') !== '1') return null;
   if (pathname !== '/') return null;
 
   return (
     <a
-      href={isCandidate ? '/' : '/?atmo=candidate'}
+      href={isCandidate ? '/?dev=1' : '/?dev=1&atmo=candidate'}
       className="fixed bottom-6 left-4 z-50 rounded-full border px-4 py-2 text-xs tracking-wide backdrop-blur-sm transition"
       style={{
         borderColor: isCandidate
