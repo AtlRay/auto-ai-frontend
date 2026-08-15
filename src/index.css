@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Auto AI Technologies™ — brand tokens
+   --------------------------------------------------------------------------
+   Locked brand hierarchy:
+     1. Shared atmosphere  — gold/amber diagonal laser lines, actively moving.
+     2. Product accent     — Zayra = electric cyan, glow SOURCED from her and
+                             radiating outward, fading into gold at the edges.
+     3. Chrome typography  — wordmark + stacked A/I logo.
+     4. Containment        — cosmic indigo/gold belongs ONLY to the floating
+                             "Ask Zayra" panel, never the page background.
+   ========================================================================== */
+
+@theme {
+  /* Base — deep neutral black. Deliberately NOT indigo: the cosmic wash is
+     contained to the Ask Zayra panel. */
+  --color-void: #06060a;
+  --color-void-soft: #0c0c12;
+
+  /* Shared atmosphere — gold / amber */
+  --color-gold: #f5b53d;
+  --color-gold-bright: #ffd47a;
+  --color-amber-deep: #b9781a;
+
+  /* Zayra accent — electric cyan */
+  --color-cyan-source: #5ff2ff;
+  --color-cyan-core: #22d3ee;
+  --color-cyan-deep: #0b7c8c;
+
+  /* Chrome ramp for typography */
+  --color-chrome-hi: #ffffff;
+  --color-chrome-mid: #c8ccd6;
+  --color-chrome-lo: #6b7280;
+
+  --font-display: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-void);
+  color: #e8eaf0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Atmosphere motion — the gold laser lines travel along their own diagonal.
+   Each line gets its own duration so the field parallaxes instead of marching
+   in lockstep.
+   -------------------------------------------------------------------------- */
+@keyframes laser-drift {
+  from {
+    transform: translate3d(-55%, 0, 0);
+  }
+  to {
+    transform: translate3d(55%, 0, 0);
+  }
+}
+
+/* Slow breathing on the source glow so it reads as living light, not a
+   static radial fill. */
+@keyframes source-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* Electric current running through the A / I glyphs. */
+@keyframes current-flicker {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 6px rgba(95, 242, 255, 0.9),
+      0 0 18px rgba(34, 211, 238, 0.65),
+      0 0 40px rgba(34, 211, 238, 0.35);
+  }
+  47% {
+    opacity: 0.92;
+    text-shadow:
+      0 0 4px rgba(95, 242, 255, 0.8),
+      0 0 12px rgba(34, 211, 238, 0.5),
+      0 0 28px rgba(34, 211, 238, 0.25);
+  }
+  53% {
+    opacity: 1;
+    text-shadow:
+      0 0 10px rgba(95, 242, 255, 1),
+      0 0 26px rgba(34, 211, 238, 0.8),
+      0 0 56px rgba(34, 211, 238, 0.45);
+  }
+}
+
+.laser-line {
+  animation: laser-drift linear infinite alternate;
+  will-change: transform;
+}
+
+.source-glow {
+  animation: source-pulse 7s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.electric-glyph {
+  color: var(--color-cyan-source);
+  animation: current-flicker 4.5s ease-in-out infinite;
+}
+
+/* Chrome text treatment — bright top, mid body, darker base, with a hairline
+   highlight so it reads as brushed metal rather than a flat gradient. */
+.chrome-text {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #e6e9f0 22%,
+    #9aa1ae 48%,
+    #f2f4f8 58%,
+    #7d8492 78%,
+    #b9c0cc 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laser-line,
+  .source-glow,
+  .electric-glyph {
+    animation: none !important;
+  }
+}

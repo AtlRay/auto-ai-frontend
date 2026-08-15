@@ -1,0 +1,31 @@
+/**
+ * "Never Build Alone." wordmark.
+ *
+ * Chrome typography with the I and A rendered as glowing electric current —
+ * the hidden A/I inside the tagline. This is the shared brand mechanism; when
+ * another product needs an "AI" callout it reuses this treatment in that
+ * product's accent color rather than inventing a new one.
+ */
+
+type Props = {
+  className?: string;
+  /** Include the trailing period. The tagline is written "Never Build Alone." */
+  withPeriod?: boolean;
+};
+
+export function Wordmark({ className = '', withPeriod = true }: Props) {
+  return (
+    <span
+      className={`chrome-text font-[var(--font-display)] font-semibold tracking-tight ${className}`}
+      // Screen readers get the plain tagline, not the split glyphs.
+      aria-label={`Never Build Alone${withPeriod ? '.' : ''}`}
+    >
+      <span aria-hidden="true">
+        Never Bu<span className="electric-glyph">i</span>ld{' '}
+        <span className="electric-glyph">A</span>lone{withPeriod ? '.' : ''}
+      </span>
+    </span>
+  );
+}
+
+export default Wordmark;
