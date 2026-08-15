@@ -1,6 +1,7 @@
 import Wordmark from '@/components/brand/Wordmark';
 import ZayraSourceGlow from '@/components/brand/ZayraSourceGlow';
 import { useAtmoVariant } from '@/components/brand/AtmosphereSwitch';
+import { ROSTER } from '@/lib/roster';
 
 /**
  * Landing page.
@@ -9,23 +10,6 @@ import { useAtmoVariant } from '@/components/brand/AtmosphereSwitch';
  * Pricing is intentionally absent until the RA.com wholesale-cost
  * reconciliation lands — this app must not stand up a competing price list.
  */
-
-/** Locked roster of five. Roles are only stated where they are confirmed. */
-const ROSTER = [
-  {
-    name: 'Zayra',
-    role: 'AI co-founder — the Founder Operating System.',
-    accent: '#5ff2ff',
-  },
-  {
-    name: 'Chachy',
-    role: 'AI sales-hunting agent. The Digital Wolf.',
-    accent: '#a855f7',
-  },
-  { name: 'Vera', role: null, accent: '#f5b53d' },
-  { name: 'Cache', role: null, accent: '#f5b53d' },
-  { name: 'Aegis', role: null, accent: '#f5b53d' },
-];
 
 export function Landing() {
   // Candidate preview calls for the tagline in muted gold; the locked
@@ -124,24 +108,54 @@ export function Landing() {
         </p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {ROSTER.map((member) => (
-            <div
-              key={member.name}
-              className="rounded-2xl border border-white/8 bg-white/[0.02] p-5"
-            >
+          {ROSTER.map((member) => {
+            const realized = member.status === 'realized';
+            return (
               <div
-                className="mb-3 h-1 w-8 rounded-full"
+                key={member.name}
+                className="flex flex-col rounded-2xl border p-5 transition"
                 style={{
-                  background: member.accent,
-                  boxShadow: `0 0 12px ${member.accent}`,
+                  borderColor: realized
+                    ? 'rgba(255,255,255,0.09)'
+                    : 'rgba(255,255,255,0.05)',
+                  background: realized
+                    ? 'rgba(255,255,255,0.02)'
+                    : 'rgba(255,255,255,0.008)',
                 }}
-              />
-              <h3 className="mb-1.5 font-semibold text-white/90">{member.name}</h3>
-              <p className="text-xs leading-relaxed text-white/45">
-                {member.role ?? 'Role not yet published.'}
-              </p>
-            </div>
-          ))}
+              >
+                {/* Accent bar only where a colour is confirmed. Members
+                    without one get a neutral rule, not a borrowed hue. */}
+                <div
+                  className="mb-3 h-1 w-8 rounded-full"
+                  style={
+                    member.accent
+                      ? {
+                          background: member.accent,
+                          boxShadow: `0 0 12px ${member.accent}`,
+                        }
+                      : { background: 'rgba(255,255,255,0.14)' }
+                  }
+                />
+
+                <h3
+                  className="mb-1 font-semibold"
+                  style={{ color: realized ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.45)' }}
+                >
+                  {member.name}
+                </h3>
+
+                {member.role && (
+                  <p className="mb-1.5 text-[0.7rem] tracking-[0.12em] text-white/35 uppercase">
+                    {member.role}
+                  </p>
+                )}
+
+                <p className="text-xs leading-relaxed text-white/45">
+                  {member.copy ?? 'Joining the pack.'}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </section>
     </main>

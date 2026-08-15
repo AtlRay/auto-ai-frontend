@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import AtmosphereLayer from './AtmosphereLayer';
 import CandidateAtmosphere from './CandidateAtmosphere';
 
@@ -28,7 +28,12 @@ export function AtmosphereSwitch() {
 /** Small on-screen control so the two can be flipped without editing URLs. */
 export function AtmoToggle() {
   const variant = useAtmoVariant();
+  const { pathname } = useLocation();
   const isCandidate = variant === 'candidate';
+
+  // The atmosphere comparison is a landing-page exercise — don't clutter
+  // other routes with preview scaffolding.
+  if (pathname !== '/') return null;
 
   return (
     <a

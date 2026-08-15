@@ -4,6 +4,7 @@ import AskZayraPanel from '@/components/zayra/AskZayraPanel';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
 import Landing from '@/pages/Landing';
+import Usage from '@/pages/Usage';
 
 /**
  * Only the landing route exists so far. The consolidated route map is still
@@ -22,6 +23,8 @@ export function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Landing />} />
+            {/* Folds into /dashboard once the route map is signed off. */}
+            <Route path="/usage" element={<Usage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
