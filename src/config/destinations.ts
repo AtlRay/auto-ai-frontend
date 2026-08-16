@@ -23,6 +23,13 @@ export const MAIN_ITEMS: Destination[] = [
   { title: 'Zayra Home', url: '/empire', desc: 'Your founder home base' },
   { title: 'AI Builder', url: '/founder', desc: 'Idea → business → launch', featured: true },
   { title: 'Operate', url: '/operate', desc: 'Grow, message, follow up' },
+  // STANDING CONSTRAINT — read before porting this surface.
+  // Zayra's Research Engine (live market/coin/stock lookups + Nimble web
+  // research) is being wired in the V1 backend as SHARED-BRAIN TOOLS. This
+  // UI consumes those tools through the shared brain and must never
+  // implement its own lookup or research stubs. Until that connection
+  // exists, render an honest empty state — "research connects when the
+  // shared brain lands" — the same as every other disabled control here.
   { title: 'Research & Invest', url: '/opportunity-os', desc: 'Find your next move' },
   { title: 'Workspace', url: '/zayra-cloud', desc: 'Files, memory, projects', featured: true },
 ];
