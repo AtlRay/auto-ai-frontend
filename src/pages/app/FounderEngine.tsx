@@ -10,6 +10,7 @@ import {
 } from '@/config/founderStages';
 import { FounderReadiness } from '@/components/home/HomeCards';
 import StageYourIdea from '@/pages/app/stages/StageYourIdea';
+import StageFormation from '@/pages/app/stages/StageFormation';
 
 /**
  * Founder Engine — the AI Builder journey at /founder.
@@ -160,6 +161,8 @@ export function FounderEngine() {
 
             {step === 1 ? (
               <StageYourIdea />
+            ) : step === 4 ? (
+              <StageFormation />
             ) : (
             <div className="rounded-xl border border-dashed border-white/10 px-6 py-10">
               <p className="text-sm text-white/55">

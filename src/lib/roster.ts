@@ -22,8 +22,9 @@ export const ROSTER: RosterMember[] = [
     name: 'Zayra',
     role: 'AI co-founder',
     copy: 'The Founder Operating System. Carries your business between sessions.',
-    // Locked: electric cyan, glow sourced from her.
-    accent: '#5ff2ff',
+    // Per-platform law: violet is her canonical accent on this platform,
+    // matching the AAT landing portrait. Cyan is her other-rooms variant.
+    accent: '#9f38fa',
     status: 'realized',
   },
   {

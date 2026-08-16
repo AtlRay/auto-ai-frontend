@@ -89,7 +89,7 @@ export function AlphaWelcomeCard() {
             key={label}
             type="button"
             onClick={() => wake(line)}
-            className="inline-flex min-h-11 items-center rounded-lg border border-[#5ff2ff]/30 px-5 text-sm text-[#dff3ff]/80 transition hover:border-[#5ff2ff]/60 hover:bg-[#5ff2ff]/10"
+            className="inline-flex min-h-11 items-center rounded-lg border border-violet-400/30 px-5 text-sm text-violet-100/80 transition hover:border-violet-400/60 hover:bg-violet-500/10"
           >
             {label}
           </button>
@@ -138,7 +138,7 @@ export function StarterPrompts() {
                   setCaption(p.label);
                   setOpen(true);
                 }}
-                className="inline-flex min-h-11 items-center rounded-full border border-[#5ff2ff]/25 px-3 text-xs text-[#dff3ff]/75 transition hover:border-[#5ff2ff]/50 hover:bg-[#5ff2ff]/10"
+                className="inline-flex min-h-11 items-center rounded-full border border-violet-400/25 px-3 text-xs text-violet-100/75 transition hover:border-violet-400/50 hover:bg-violet-500/10"
               >
                 {p.label}
               </button>

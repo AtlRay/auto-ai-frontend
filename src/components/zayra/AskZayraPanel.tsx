@@ -45,7 +45,7 @@ export function AskZayraPanel() {
 
           <div className="space-y-3 px-4 py-5">
             {caption && (
-              <p className="rounded-lg border border-[#5ff2ff]/25 bg-[#5ff2ff]/5 px-3 py-2 text-sm leading-relaxed text-[#dff3ff]">
+              <p className="rounded-lg border border-violet-400/30 bg-violet-500/10 px-3 py-2 text-sm leading-relaxed text-violet-100">
                 {caption}
               </p>
             )}
