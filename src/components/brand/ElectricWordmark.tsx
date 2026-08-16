@@ -29,7 +29,17 @@ export default function ElectricWordmark({ size = 'hero' }: ElectricWordmarkProp
 
   return (
     <div className="select-none text-center">
+      {/* The stack is split across glyphs for the chrome and current
+          treatments, which reads as "NEVER BU I LD A LONE" to a screen
+          reader. Hide it and expose the tagline once, as the page heading. */}
+      {isHero ? (
+        <h1 className="sr-only">Never Build Alone</h1>
+      ) : (
+        <span className="sr-only">Never Build Alone</span>
+      )}
+
       <div
+        aria-hidden="true"
         className="hero-line leading-[0.84]"
         style={{ fontSize: outer, animationDelay: DELAYS[0] }}
       >
@@ -39,6 +49,7 @@ export default function ElectricWordmark({ size = 'hero' }: ElectricWordmarkProp
       </div>
 
       <div
+        aria-hidden="true"
         className="hero-line flex items-baseline justify-center leading-[0.84]"
         style={{ fontSize: mid, animationDelay: DELAYS[1] }}
       >
@@ -57,6 +68,7 @@ export default function ElectricWordmark({ size = 'hero' }: ElectricWordmarkProp
       </div>
 
       <div
+        aria-hidden="true"
         className="hero-line flex items-baseline justify-center leading-[0.84]"
         style={{ fontSize: outer, animationDelay: DELAYS[2] }}
       >
@@ -70,9 +82,6 @@ export default function ElectricWordmark({ size = 'hero' }: ElectricWordmarkProp
           LONE
         </span>
       </div>
-
-      {/* The stack is decorative type; give assistive tech the plain line. */}
-      <span className="sr-only">Never Build Alone</span>
     </div>
   );
 }
