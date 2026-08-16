@@ -38,7 +38,7 @@ export function AutoAILogo({ className = '', showFullName = false }: Props) {
       </span>
 
       {showFullName && (
-        <span className="ml-1 text-xs tracking-[0.2em] text-white/45 uppercase">
+        <span className="ml-1 hidden text-xs tracking-[0.2em] text-white/45 uppercase sm:inline">
           Technologies™
         </span>
       )}

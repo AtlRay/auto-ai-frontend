@@ -37,7 +37,7 @@ export function AskZayraPanel() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close Ask Zayra"
-              className="rounded-md px-2 py-0.5 text-white/50 transition hover:bg-white/10 hover:text-white"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-white/50 transition hover:bg-white/10 hover:text-white"
             >
               ✕
             </button>
@@ -60,7 +60,7 @@ export function AskZayraPanel() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? 'Close Ask Zayra' : 'Open Ask Zayra'}
-        className="fixed right-4 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-[#5ff2ff]/40 text-lg font-semibold text-[#5ff2ff] transition hover:scale-105"
+        className="fixed right-4 bottom-[calc(1.5rem+env(safe-area-inset-bottom))] z-50 flex h-14 w-14 items-center justify-center rounded-full border border-[#5ff2ff]/40 text-lg font-semibold text-[#5ff2ff] transition hover:scale-105 md:bottom-6"
         style={{
           background:
             'radial-gradient(circle at 50% 35%, rgba(34,211,238,0.22) 0%, rgba(24,16,56,0.95) 60%)',

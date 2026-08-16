@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useViewportWidth } from '@/hooks/useViewport';
 
 /**
  * Constellation field — ported from ThoughtPathCanvas.
@@ -28,17 +29,28 @@ type Traveler = { edge: Edge; t: number; speed: number; gold: boolean };
 
 interface Props {
   className?: string;
+  /** Omit to let density scale with viewport width. */
   nodeCount?: number;
   travelerCount?: number;
 }
 
 export default function ConstellationField({
   className,
-  nodeCount = 64,
-  travelerCount = 26,
+  nodeCount,
+  travelerCount,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const viewportWidth = useViewportWidth();
 
+  // Density scales down on narrow screens so a Fold cover screen gets a field,
+  // not clutter. Bucketed so ordinary resizes don't thrash the re-seed.
+  const bucket = viewportWidth < 400 ? 0 : viewportWidth < 700 ? 1 : viewportWidth < 1100 ? 2 : 3;
+  const nodes_ = nodeCount ?? [24, 36, 50, 64][bucket];
+  const travelers_ = travelerCount ?? [10, 15, 21, 26][bucket];
+
+  // Keyed on `bucket` as well as counts: a foldable opening changes the
+  // viewport live, and the node field must re-seed into the new box rather
+  // than stay laid out for the old one.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -62,7 +74,7 @@ export default function ConstellationField({
     resize();
     window.addEventListener('resize', resize);
 
-    const nodes: Node[] = Array.from({ length: nodeCount }, () => ({
+    const nodes: Node[] = Array.from({ length: nodes_ }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       // Slow enough to read as depth rather than motion.
@@ -98,7 +110,7 @@ export default function ConstellationField({
       speed: 0.006 + Math.random() * 0.012,
       gold: Math.random() < 0.3,
     });
-    let travelers: Traveler[] = Array.from({ length: travelerCount }, makeTraveler);
+    let travelers: Traveler[] = Array.from({ length: travelers_ }, makeTraveler);
 
     // Pointer parallax, eased so the field glides rather than snaps.
     let targetX = 0;
@@ -182,7 +194,7 @@ export default function ConstellationField({
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointer);
     };
-  }, [nodeCount, travelerCount]);
+  }, [nodes_, travelers_, bucket]);
 
   return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
 }

@@ -69,7 +69,7 @@ export function AlphaWelcomeCard() {
       <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <Link
           to="/founder"
-          className="rounded-lg border border-[#f5b53d]/50 bg-[#f5b53d]/10 px-5 py-2.5 text-sm font-medium text-[#ffd47a] transition hover:bg-[#f5b53d]/20"
+          className="inline-flex min-h-11 items-center rounded-lg border border-[#f5b53d]/50 bg-[#f5b53d]/10 px-5 text-sm font-medium text-[#ffd47a] transition hover:bg-[#f5b53d]/20"
         >
           Start With Zayra →
         </Link>
@@ -79,7 +79,7 @@ export function AlphaWelcomeCard() {
             type="button"
             disabled
             title="Needs Zayra's companion, which isn't ported yet"
-            className="cursor-not-allowed rounded-lg border border-white/10 px-5 py-2.5 text-sm text-white/25"
+            className="inline-flex min-h-11 items-center rounded-lg border border-white/10 px-5 text-sm text-white/25"
           >
             {label}
           </button>
@@ -113,7 +113,7 @@ export function StarterPrompts() {
             <li key={p.label}>
               <Link
                 to={p.route}
-                className="inline-block rounded-full border border-[#f5b53d]/30 px-3 py-1.5 text-xs text-[#ffd47a]/90 transition hover:bg-[#f5b53d]/10"
+                className="inline-flex min-h-11 items-center rounded-full border border-[#f5b53d]/30 px-3 text-xs text-[#ffd47a]/90 transition hover:bg-[#f5b53d]/10"
               >
                 {p.label}
               </Link>
@@ -124,7 +124,7 @@ export function StarterPrompts() {
                 type="button"
                 disabled
                 title="Needs Zayra's companion, which isn't ported yet"
-                className="cursor-not-allowed rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/25"
+                className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-white/10 px-3 text-xs text-white/25"
               >
                 {p.label}
               </button>
@@ -233,7 +233,7 @@ export function AppAccessRow() {
           type="button"
           disabled
           title="Install prompt isn't ported yet"
-          className="cursor-not-allowed rounded-lg border border-white/10 px-4 py-2 text-xs text-white/25"
+          className="inline-flex min-h-11 cursor-not-allowed items-center rounded-lg border border-white/10 px-4 text-xs text-white/25"
         >
           Add to Phone
         </button>

@@ -23,7 +23,7 @@ function NavItem({ item, collapsed }: { item: Destination; collapsed: boolean })
     <NavLink
       to={item.url}
       title={collapsed ? `${item.title} — ${item.desc}` : undefined}
-      className="group flex items-start gap-3 rounded-lg px-3 py-2.5 transition"
+      className="group flex min-h-11 items-start gap-3 rounded-lg px-3 py-2.5 transition"
       style={{
         background: active ? 'rgba(245,181,61,0.10)' : 'transparent',
         boxShadow: active ? 'inset 2px 0 0 #f5b53d' : 'none',
@@ -80,7 +80,7 @@ export function AppSidebar({ collapsed }: { collapsed: boolean }) {
             type="button"
             onClick={() => setMoreOpen((v) => !v)}
             aria-expanded={moreOpen}
-            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs tracking-[0.14em] text-white/40 uppercase transition hover:text-white/70"
+            className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 text-xs tracking-[0.14em] text-white/40 uppercase transition hover:text-white/70"
           >
             {!collapsed && <span>More</span>}
             <span aria-hidden="true">{moreOpen ? '−' : '+'}</span>

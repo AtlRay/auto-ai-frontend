@@ -16,14 +16,14 @@ import { MAIN_ITEMS } from '@/config/destinations';
 function BottomNav() {
   const { pathname } = useLocation();
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-white/10 bg-black/85 backdrop-blur-md md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-white/10 bg-black/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
       {MAIN_ITEMS.map((item) => {
         const active = pathname === item.url || pathname.startsWith(item.url + '/');
         return (
           <NavLink
             key={item.url}
             to={item.url}
-            className="flex flex-1 flex-col items-center gap-1 py-2.5 text-[0.6rem] leading-tight"
+            className="flex min-h-11 flex-1 flex-col items-center justify-center gap-1 px-1 py-2.5 text-[0.6rem] leading-tight"
             style={{ color: active ? '#ffd47a' : 'rgba(255,255,255,0.45)' }}
           >
             <span
@@ -52,25 +52,25 @@ export function AppShell() {
       </div>
 
       <main className="relative z-10 flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-white/5 bg-black/40 px-4 backdrop-blur-md">
+        <header className="flex h-14 items-center justify-between gap-3 border-b border-white/5 bg-black/40 px-3 backdrop-blur-md sm:px-4">
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => setCollapsed((v) => !v)}
               aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              className="hidden rounded-md px-2 py-1 text-white/50 transition hover:bg-white/10 hover:text-white md:block"
+              className="hidden min-h-11 min-w-11 items-center justify-center rounded-md text-white/50 transition hover:bg-white/10 hover:text-white md:inline-flex"
             >
               ☰
             </button>
-            <span className="text-sm font-medium text-white/45">
-              Auto AI Technologies™ · Never Build Alone
+            <span className="truncate text-sm font-medium text-white/45">
+              <span className="hidden sm:inline">Auto AI Technologies™ · </span>Never Build Alone
             </span>
           </div>
 
           {/* Inert until the route map is approved — no dead route, no fake
               destination. */}
           <span
-            className="cursor-not-allowed text-sm font-medium text-white/25"
+            className="hidden shrink-0 cursor-not-allowed text-sm font-medium text-white/25 sm:inline"
             title="Not available yet"
           >
             Watch the Trailer

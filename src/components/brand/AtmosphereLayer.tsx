@@ -1,4 +1,5 @@
 import PremiumParticles from './PremiumParticles';
+import { useAtmosphereDensity } from '@/hooks/useViewport';
 
 /**
  * Shared Auto AI Technologies™ atmosphere.
@@ -50,6 +51,10 @@ const BEAMS: Beam[] = [
 ];
 
 export function AtmosphereLayer() {
+  // Density scales down on narrow viewports and reflows live when a foldable
+  // opens or closes — no reload, no load-time width assumption.
+  const { beams, particles } = useAtmosphereDensity();
+
   return (
     <div
       aria-hidden="true"
@@ -108,11 +113,11 @@ export function AtmosphereLayer() {
       />
 
       {/* Drifting node dots. */}
-      <PremiumParticles count={56} />
+      <PremiumParticles count={particles} />
 
       {/* Diagonal beams — travel along their own axis while the source's 7s
           pulse envelope breathes them. */}
-      {BEAMS.map((beam, i) => (
+      {BEAMS.slice(0, beams).map((beam, i) => (
         <div
           key={i}
           className="laser-line absolute -left-1/4 w-[150%]"

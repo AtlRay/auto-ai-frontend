@@ -31,7 +31,7 @@ export function Tabs({
       <div
         role="tablist"
         aria-label="Zayra Home sections"
-        className="grid grid-cols-3 gap-1 rounded-xl border border-white/8 bg-white/[0.02] p-1 md:grid-cols-6"
+        className="grid grid-cols-2 gap-1 rounded-xl border border-white/8 bg-white/[0.02] p-1 min-[420px]:grid-cols-3 md:grid-cols-6"
         onKeyDown={(e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); move(1); }
           if (e.key === 'ArrowLeft') { e.preventDefault(); move(-1); }
@@ -51,7 +51,7 @@ export function Tabs({
               aria-controls={`${base}-panel-${t.value}`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(t.value)}
-              className="rounded-lg px-3 py-2 text-sm font-medium transition"
+              className="min-h-11 rounded-lg px-2 text-sm font-medium transition"
               style={{
                 background: selected ? 'rgba(245,181,61,0.12)' : 'transparent',
                 color: selected ? '#ffd47a' : 'rgba(255,255,255,0.55)',

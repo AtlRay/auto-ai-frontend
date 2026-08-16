@@ -10,27 +10,27 @@ import AutoAILogo from '@/components/brand/AutoAILogo';
 export function SiteHeader() {
   return (
     <header className="relative z-20 border-b border-white/5 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <a href="/" className="transition hover:opacity-90">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5">
+        <a href="/" className="flex min-h-11 min-w-0 items-center transition hover:opacity-90">
           <AutoAILogo showFullName />
         </a>
 
         <nav className="flex items-center gap-6 text-sm">
           <a
             href="#what-zayra-is"
-            className="hidden text-white/60 transition hover:text-white sm:inline"
+            className="hidden min-h-11 items-center text-white/60 transition hover:text-white md:inline-flex"
           >
             What Zayra is
           </a>
           <a
             href="#the-roster"
-            className="hidden text-white/60 transition hover:text-white sm:inline"
+            className="hidden min-h-11 items-center text-white/60 transition hover:text-white md:inline-flex"
           >
             The roster
           </a>
           <a
             href="#access"
-            className="rounded-full border border-[#f5b53d]/40 px-4 py-1.5 text-[#ffd47a] transition hover:border-[#f5b53d]/70 hover:bg-[#f5b53d]/10"
+            className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-[#f5b53d]/40 px-4 text-[#ffd47a] transition hover:border-[#f5b53d]/70 hover:bg-[#f5b53d]/10"
           >
             Request access
           </a>

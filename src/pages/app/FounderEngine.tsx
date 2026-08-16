@@ -124,7 +124,7 @@ export function FounderEngine() {
                   type="button"
                   onClick={() => goto(s.id)}
                   aria-current={active ? 'step' : undefined}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-300"
+                  className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-all duration-300"
                   style={{
                     borderColor: active ? `${hex}80` : 'rgba(255,255,255,0.14)',
                     color: active ? hex : 'rgba(255,255,255,0.5)',
@@ -205,7 +205,7 @@ export function FounderEngine() {
             type="button"
             disabled={prevId === null}
             onClick={() => prevId !== null && goto(prevId)}
-            className="rounded-lg border border-white/12 px-4 py-2 text-sm text-white/70 transition enabled:hover:bg-white/5 disabled:cursor-not-allowed disabled:text-white/20"
+            className="inline-flex min-h-11 items-center rounded-lg border border-white/12 px-4 text-sm text-white/70 transition enabled:hover:bg-white/5 disabled:cursor-not-allowed disabled:text-white/20"
           >
             ‹ {prevId !== null ? `Back to ${STAGES.find((s) => s.id === prevId)!.name}` : 'Back'}
           </button>
@@ -218,7 +218,7 @@ export function FounderEngine() {
             type="button"
             disabled={nextId === null}
             onClick={() => nextId !== null && goto(nextId)}
-            className="rounded-lg border border-[#f5b53d]/50 bg-[#f5b53d]/10 px-4 py-2 text-sm font-medium text-[#ffd47a] transition enabled:hover:bg-[#f5b53d]/20 disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-transparent disabled:text-white/20"
+            className="inline-flex min-h-11 items-center rounded-lg border border-[#f5b53d]/50 bg-[#f5b53d]/10 px-4 text-right text-sm font-medium text-[#ffd47a] transition enabled:hover:bg-[#f5b53d]/20 disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-transparent disabled:text-white/20"
           >
             {nextId !== null ? `Next: ${STAGES.find((s) => s.id === nextId)!.name}` : 'Complete'} ›
           </button>

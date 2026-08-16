@@ -17,7 +17,7 @@ export function Landing() {
           The section paints its own opaque ground, which keeps the shared
           gold laser atmosphere off this moment entirely: the starfield is
           this section's atmosphere. Gold resumes below the fold. */}
-      <section className="relative flex min-h-[86vh] w-full flex-col justify-end overflow-hidden bg-black">
+      <section className="relative flex min-h-[86dvh] w-full flex-col justify-end overflow-hidden bg-black">
         {/* Optional photographic plate. Absent from the repo, so it removes
             itself rather than leaving a broken frame — drop
             public/zayra-office.jpg in and it appears with no code change. */}
@@ -50,13 +50,13 @@ export function Landing() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="#access"
-              className="hero-cta rounded-lg bg-gradient-to-r from-[#eaffff] to-[#3fd6ff] px-7 py-3.5 text-sm font-medium text-[#04222b] shadow-[0_0_26px_rgba(63,214,255,0.35)]"
+              className="hero-cta inline-flex min-h-11 items-center rounded-lg bg-gradient-to-r from-[#eaffff] to-[#3fd6ff] px-7 py-3.5 text-sm font-medium text-[#04222b] shadow-[0_0_26px_rgba(63,214,255,0.35)]"
             >
               Enter Founder OS &rarr;
             </a>
             <button
               type="button"
-              className="rounded-lg border border-white/20 bg-black/30 px-7 py-3.5 text-sm text-gray-200 transition hover:border-white/40 hover:bg-black/50"
+              className="inline-flex min-h-11 items-center rounded-lg border border-white/20 bg-black/30 px-7 py-3.5 text-sm text-gray-200 transition hover:border-white/40 hover:bg-black/50"
             >
               Watch the trailer
             </button>
