@@ -9,6 +9,7 @@ import {
   prevVisibleId,
 } from '@/config/founderStages';
 import { FounderReadiness } from '@/components/home/HomeCards';
+import StageYourIdea from '@/pages/app/stages/StageYourIdea';
 
 /**
  * Founder Engine — the AI Builder journey at /founder.
@@ -157,6 +158,9 @@ export function FounderEngine() {
             <h2 className="mb-2 text-xl font-semibold text-white/90">{stage.name}</h2>
             <p className="mb-6 text-sm text-white/45">{stage.tagline}</p>
 
+            {step === 1 ? (
+              <StageYourIdea />
+            ) : (
             <div className="rounded-xl border border-dashed border-white/10 px-6 py-10">
               <p className="text-sm text-white/55">
                 {stage.hiddenInDefault
@@ -170,6 +174,7 @@ export function FounderEngine() {
                 </p>
               )}
             </div>
+            )}
           </div>
         </div>
 
