@@ -16,7 +16,10 @@ import { useAtmosphereDensity } from '@/hooks/useViewport';
  *  - Mostly hairline whispers with a few brighter hero beams — that mix is the
  *    signature; a uniform field reads flat.
  *  - Gold-led at roughly 70%, teal/spring secondary at roughly 30%.
- *  - Zero violet beams, per the final colour ruling.
+ *  - Zero violet beams, per the final colour ruling. Violet appears only as
+ *    soft nebula glow in the backdrop — lower corners and behind the headline
+ *    — at low opacity and heavily blurred. It is the room's shadow, never its
+ *    light, and never the field's identity.
  *
  * Motion: slow drift dominates, breathing on the source's 7s pulse envelope.
  * Nothing strobes.
@@ -118,6 +121,32 @@ export function AtmosphereLayer() {
         style={{
           background:
             'radial-gradient(120% 80% at 50% 0%, rgba(96, 58, 10, 0.22) 0%, rgba(12, 9, 5, 0.97) 46%, #050308 100%)',
+        }}
+      />
+
+      {/* Violet/indigo nebula zones — backdrop texture only. Low opacity and
+          soft-blurred so they read as shadow behind the room, never as a
+          coloured field and never as beams. */}
+      <div
+        className="absolute -bottom-40 -left-32 h-[38rem] w-[38rem] rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(124, 58, 237, 0.13) 0%, rgba(88, 40, 170, 0.05) 45%, transparent 72%)',
+        }}
+      />
+      <div
+        className="absolute -right-36 -bottom-48 h-[44rem] w-[44rem] rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(99, 60, 220, 0.12) 0%, rgba(70, 35, 150, 0.045) 45%, transparent 72%)',
+        }}
+      />
+      {/* Behind the headline. */}
+      <div
+        className="absolute -top-24 left-1/2 h-[34rem] w-[52rem] -translate-x-1/2 rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(ellipse, rgba(112, 62, 214, 0.11) 0%, rgba(80, 45, 165, 0.04) 50%, transparent 74%)',
         }}
       />
 
