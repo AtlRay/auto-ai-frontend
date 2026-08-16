@@ -130,9 +130,104 @@ body {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Atmosphere, ported from the live app.
+   Source: AtlRay/auto-ai-technologies @ 1a47437 —
+     src/components/brand/ZayraBrandBackground.tsx
+     src/components/brand/ZayraLaserBackground.tsx
+     src/components/PremiumParticles.tsx
+     src/styles/zayra-laser.css
+   Timings and envelopes are carried across verbatim; the hue is gold per the
+   locked brand rule (the source renders these same layers in violet).
+   -------------------------------------------------------------------------- */
+
+/* zayra-laser-pulse, opacity envelope only — the source also nudges transform,
+   but transform here belongs to the drift so the beams travel as well. */
+@keyframes beam-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zayra-scanline-sweep {
+  0% {
+    top: -2%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    top: 102%;
+    opacity: 0;
+  }
+}
+
+@keyframes zayra-aura-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes zayra-particle-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.85);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(var(--zp-drift, 0px), -28px, 0) scale(1);
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(0, -56px, 0) scale(0.85);
+    opacity: 0;
+  }
+}
+
+.zayra-particle {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: zayra-particle-drift linear infinite;
+  mix-blend-mode: screen;
+}
+
+.zayra-aura {
+  animation: zayra-aura-pulse 6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.zayra-scanline {
+  animation: zayra-scanline-sweep 9s linear infinite;
+  will-change: top, opacity;
+}
+
 .laser-line {
-  animation: laser-drift linear infinite alternate;
-  will-change: transform;
+  animation:
+    laser-drift linear infinite alternate,
+    beam-pulse 7s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .source-glow {
@@ -309,9 +404,17 @@ body {
   .source-glow,
   .electric-glyph,
   .ice-breathe,
+  .zayra-particle,
+  .zayra-aura,
   .hero-bolt,
   .hero-line,
   .hero-chrome-catch {
     animation: none !important;
+  }
+  .zayra-scanline {
+    display: none;
+  }
+  .zayra-particle {
+    opacity: 0.5;
   }
 }
