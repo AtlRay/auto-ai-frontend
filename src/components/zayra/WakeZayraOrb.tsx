@@ -1,7 +1,8 @@
 // WAKE ZAYRA ORB
-// The one guaranteed entry point to Zayra. Small, electric-cyan, minimal —
-// deliberately NOT the cosmic indigo/gold treatment, which stays contained
-// inside the Ask Zayra panel itself. Mounted globally in App.tsx so it
+// The one guaranteed entry point to Zayra. Small, minimal, in her platform
+// accent — violet here, per the per-platform law — deliberately NOT the
+// cosmic indigo/gold treatment, which stays contained inside the Ask Zayra
+// panel itself. Mounted globally in App.tsx so it
 // survives every nav change, on public and signed-in routes alike.
 //
 // Signed in  -> opens the Ask Zayra panel + a short greeting.
@@ -95,7 +96,7 @@ export function WakeZayraOrb() {
     <>
       <div className="fixed right-5 bottom-[calc(env(safe-area-inset-bottom,0px)+5rem)] z-[120] flex items-center gap-2 md:right-6 md:bottom-6">
         {showPill && (
-          <span className="hidden items-center rounded-full border border-cyan-300/40 bg-black/85 px-3 py-1.5 text-[11px] font-semibold text-cyan-100 shadow-[0_0_20px_hsl(190_95%_60%/0.25)] backdrop-blur sm:inline-flex">
+          <span className="hidden items-center rounded-full border border-violet-400/40 bg-black/85 px-3 py-1.5 text-[11px] font-semibold text-violet-100 shadow-[0_0_20px_hsl(272_95%_62%/0.28)] backdrop-blur sm:inline-flex">
             Wake Zayra
           </span>
         )}
@@ -104,7 +105,7 @@ export function WakeZayraOrb() {
           onClick={onTap}
           aria-label={label}
           title={label}
-          className="relative grid h-14 w-14 place-items-center rounded-full transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:outline-none active:scale-95"
+          className="relative grid h-14 w-14 place-items-center rounded-full transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:outline-none active:scale-95"
         >
           <ZayraFace size={56} />
           <span className="sr-only">{label}</span>
@@ -113,13 +114,13 @@ export function WakeZayraOrb() {
 
       {pendingGreeting && (
         <div
-          className="fixed right-5 bottom-[calc(env(safe-area-inset-bottom,0px)+9rem)] z-[120] max-w-[16rem] rounded-xl border border-cyan-300/40 bg-black/90 px-3 py-2 text-left text-[11px] text-cyan-50 shadow-lg backdrop-blur md:right-6 md:bottom-24"
+          className="fixed right-5 bottom-[calc(env(safe-area-inset-bottom,0px)+9rem)] z-[120] max-w-[16rem] rounded-xl border border-violet-400/40 bg-black/90 px-3 py-2 text-left text-[11px] text-violet-50 shadow-lg backdrop-blur md:right-6 md:bottom-24"
           role="status"
         >
-          <span className="block font-semibold text-cyan-200">Zayra</span>
+          <span className="block font-semibold text-violet-200">Zayra</span>
           <span className="mt-0.5 block leading-snug">{pendingGreeting}</span>
           {!canSpeak && (
-            <span className="mt-1 block text-[10px] text-cyan-100/40">
+            <span className="mt-1 block text-[10px] text-violet-100/40">
               Voice isn't connected in this build.
             </span>
           )}

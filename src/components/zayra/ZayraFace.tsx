@@ -11,18 +11,29 @@
 import { useState } from 'react';
 
 /**
- * Ring hue. Defaults to cyan per locked brand rule 2 (Zayra's accent is
- * electric cyan, sourced from her). Parameterised only so the ring can follow
- * the render if the canonical portrait's accent is formally changed — the
- * default is not to be flipped without that ruling.
+ * Ring hue — PER-PLATFORM, per the current law.
+ *
+ * One Zayra: same face, same woman, one brain. Her outfit and colour
+ * treatment vary by platform.
+ *   violet -> canonical on the Auto AI / AAT platform (this app). Matches the
+ *             live Lovable landing portrait users already know.
+ *   cyan   -> her variant for other rooms, e.g. the Ask Zayra bubble inside
+ *             Chachy.
+ *
+ * This supersedes locked rule 2's global "cyan-only" wording. The principle of
+ * rule 2 survives untouched: her glow is still SOURCED from her — eyes, hair,
+ * chest — which the violet render honours. Only the fixed hue changed.
+ *
+ * Chachy's violet is his platform UI accent; Zayra wearing violet here does
+ * not put her in his room. Handled at the system level, not by this file.
  */
-const ACCENT_HUE = { cyan: 190, violet: 275 } as const;
+const ACCENT_HUE = { cyan: 190, violet: 272 } as const;
 
 export function ZayraFace({
   size = 56,
   pulse = true,
   glow = true,
-  accent = 'cyan',
+  accent = 'violet',
   className = '',
 }: {
   size?: number;
