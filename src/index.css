@@ -213,6 +213,20 @@ body {
   mix-blend-mode: screen;
 }
 
+@keyframes zayra-breathe {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-zayra-breathe {
+  animation: zayra-breathe 3.4s ease-in-out infinite;
+}
+
 .zayra-aura {
   animation: zayra-aura-pulse 6s ease-in-out infinite;
   will-change: opacity, transform;
@@ -406,6 +420,7 @@ body {
   .ice-breathe,
   .zayra-particle,
   .zayra-aura,
+  .animate-zayra-breathe,
   .hero-bolt,
   .hero-line,
   .hero-chrome-catch {

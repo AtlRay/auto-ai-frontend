@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useZayraPresence } from '@/hooks/useZayraPresence';
 
 /**
  * "Ask Zayra" floating panel.
@@ -12,7 +12,7 @@ import { useState } from 'react';
  * simulating a reply.
  */
 export function AskZayraPanel() {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen, caption } = useZayraPresence();
 
   return (
     <>
@@ -44,6 +44,11 @@ export function AskZayraPanel() {
           </div>
 
           <div className="space-y-3 px-4 py-5">
+            {caption && (
+              <p className="rounded-lg border border-[#5ff2ff]/25 bg-[#5ff2ff]/5 px-3 py-2 text-sm leading-relaxed text-[#dff3ff]">
+                {caption}
+              </p>
+            )}
             <p className="text-sm leading-relaxed text-white/75">
               Zayra's conversational layer isn't connected in this build yet.
             </p>
@@ -55,22 +60,7 @@ export function AskZayraPanel() {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        aria-label={open ? 'Close Ask Zayra' : 'Open Ask Zayra'}
-        className="fixed right-4 bottom-[calc(1.5rem+env(safe-area-inset-bottom))] z-50 flex h-14 w-14 items-center justify-center rounded-full border border-[#5ff2ff]/40 text-lg font-semibold text-[#5ff2ff] transition hover:scale-105 md:bottom-6"
-        style={{
-          background:
-            'radial-gradient(circle at 50% 35%, rgba(34,211,238,0.22) 0%, rgba(24,16,56,0.95) 60%)',
-          boxShadow:
-            '0 0 24px rgba(34,211,238,0.35), 0 8px 24px rgba(0,0,0,0.5)',
-        }}
-      >
-        Z
-      </button>
-    </>
+</>
   );
 }
 

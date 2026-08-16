@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useZayraPresence } from '@/hooks/useZayraPresence';
 
 /**
  * Zayra Home cards, ported from the live app.
@@ -36,6 +37,12 @@ export function HomeHero() {
 /* --------------------------------------------------------- welcome card */
 
 export function AlphaWelcomeCard() {
+  const { setOpen, setCaption } = useZayraPresence();
+  const wake = (line: string) => {
+    setCaption(line);
+    setOpen(true);
+  };
+
   return (
     <div className="mb-6 rounded-2xl border border-[#f5b53d]/25 bg-gradient-to-br from-[#f5b53d]/[0.07] via-transparent to-transparent p-5 md:p-7">
       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -73,13 +80,16 @@ export function AlphaWelcomeCard() {
         >
           Start With Zayra →
         </Link>
-        {['Talk to Zayra', 'Show Me Around', 'Send Feedback'].map((label) => (
+        {[
+          { label: 'Talk to Zayra', line: "I'm here, Founder. What are we building?" },
+          { label: 'Show Me Around', line: 'Ask me how the platform works and I will walk you through it.' },
+          { label: 'Send Feedback', line: 'Tell me what is not working and I will pass it on.' },
+        ].map(({ label, line }) => (
           <button
             key={label}
             type="button"
-            disabled
-            title="Needs Zayra's companion, which isn't ported yet"
-            className="inline-flex min-h-11 items-center rounded-lg border border-white/10 px-5 text-sm text-white/25"
+            onClick={() => wake(line)}
+            className="inline-flex min-h-11 items-center rounded-lg border border-[#5ff2ff]/30 px-5 text-sm text-[#dff3ff]/80 transition hover:border-[#5ff2ff]/60 hover:bg-[#5ff2ff]/10"
           >
             {label}
           </button>
@@ -101,11 +111,13 @@ const PROMPTS: { label: string; route?: string }[] = [
 ];
 
 export function StarterPrompts() {
+  const { setOpen, setCaption } = useZayraPresence();
+
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
       <h3 className="mb-1 text-sm font-semibold text-white/85">Ask Zayra</h3>
       <p className="mb-4 text-xs text-white/40">
-        Starting points. Prompts open Zayra once her companion is ported.
+        Starting points. Tap one to hand it to Zayra.
       </p>
       <ul className="flex flex-wrap gap-2">
         {PROMPTS.map((p) =>
@@ -122,9 +134,11 @@ export function StarterPrompts() {
             <li key={p.label}>
               <button
                 type="button"
-                disabled
-                title="Needs Zayra's companion, which isn't ported yet"
-                className="inline-flex min-h-11 cursor-not-allowed items-center rounded-full border border-white/10 px-3 text-xs text-white/25"
+                onClick={() => {
+                  setCaption(p.label);
+                  setOpen(true);
+                }}
+                className="inline-flex min-h-11 items-center rounded-full border border-[#5ff2ff]/25 px-3 text-xs text-[#dff3ff]/75 transition hover:border-[#5ff2ff]/50 hover:bg-[#5ff2ff]/10"
               >
                 {p.label}
               </button>

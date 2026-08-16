@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AtmosphereSwitch, { AtmoToggle } from '@/components/brand/AtmosphereSwitch';
 import AskZayraPanel from '@/components/zayra/AskZayraPanel';
+import WakeZayraOrb from '@/components/zayra/WakeZayraOrb';
+import ZayraWakeListener from '@/components/zayra/ZayraWakeListener';
+import { ZayraPresenceProvider } from '@/hooks/useZayraPresence';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
 import AppShell from '@/components/app/AppShell';
@@ -36,6 +39,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
 export function App() {
   return (
     <BrowserRouter>
+      <ZayraPresenceProvider>
       {/* Locked gold atmosphere by default; `?atmo=candidate` previews the
           exploratory variant. The hero paints over it by design. */}
       <AtmosphereSwitch />
@@ -74,7 +78,10 @@ export function App() {
       </Routes>
 
       <AskZayraPanel />
+      <WakeZayraOrb />
+      <ZayraWakeListener />
       <AtmoToggle />
+      </ZayraPresenceProvider>
     </BrowserRouter>
   );
 }
