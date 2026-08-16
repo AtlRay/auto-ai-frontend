@@ -6,6 +6,7 @@ import SiteFooter from '@/components/layout/SiteFooter';
 import AppShell from '@/components/app/AppShell';
 import NotPortedYet from '@/pages/app/NotPortedYet';
 import ZayraHome from '@/pages/app/ZayraHome';
+import FounderEngine from '@/pages/app/FounderEngine';
 import { ALL_DESTINATIONS } from '@/config/destinations';
 import Landing from '@/pages/Landing';
 import Usage from '@/pages/Usage';
@@ -62,7 +63,9 @@ export function App() {
         <Route element={<AppShell />}>
           {/* Zayra Home is the anchor destination and is ported. */}
           <Route path="/empire/*" element={<ZayraHome />} />
-          {ALL_DESTINATIONS.filter((d) => d.url !== '/empire').map((d) => (
+          {/* AI Builder — the founder journey. */}
+          <Route path="/founder/*" element={<FounderEngine />} />
+          {ALL_DESTINATIONS.filter((d) => !['/empire', '/founder'].includes(d.url)).map((d) => (
             <Route key={d.url} path={`${d.url}/*`} element={<NotPortedYet />} />
           ))}
         </Route>
