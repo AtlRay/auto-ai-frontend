@@ -1,108 +1,144 @@
+import { useMemo } from 'react';
 import PremiumParticles from './PremiumParticles';
 import { useAtmosphereDensity } from '@/hooks/useViewport';
 
 /**
  * Shared Auto AI Technologies™ atmosphere.
  *
- * Ported from the live app so the two read as the same house. Source:
- * AtlRay/auto-ai-technologies @ 1a47437 —
- *   src/components/brand/ZayraBrandBackground.tsx  (globally mounted layer)
- *   src/components/brand/ZayraLaserBackground.tsx  (aura orbs, scan line)
- *   src/styles/zayra-laser.css                     (timings)
+ * Calibrated against the live app's AI Builder and Founder OS screens.
  *
- * The full stack matters more than any one element: aura orbs, circuit grid,
- * drifting particles, bloomed diagonal beams, a slow scan sweep, edge glow and
- * a vignette. An earlier pass had only bare lines, which is why it read thin.
+ * Composition, per the reference:
+ *  - A dense population (~30 lines at desktop), not a handful of beams.
+ *  - Dead-straight segments crossing at MANY varied angles — deliberately not
+ *    clustered around one diagonal, which is what an earlier pass got wrong.
+ *  - Long: most span 30–90% of the viewport, and several run past the edges so
+ *    they have no visible start or end.
+ *  - Mostly hairline whispers with a few brighter hero beams — that mix is the
+ *    signature; a uniform field reads flat.
+ *  - Gold-led at roughly 70%, teal/spring secondary at roughly 30%.
+ *  - Zero violet beams, per the final colour ruling.
  *
- * Colour, per the final ruling: GOLD-LED. The moving gold/amber field is the
- * house atmosphere. Teal/ice fine lines run as a subordinate secondary, per the
- * Lovable reference, which carries one cyan streak and a cyan horizon among its
- * three. Violet is Chachy's accent and never appears in the ambient field — it
- * belongs only to Chachy-owned surfaces such as his roster card and CRM module.
- *
- * Fixed, pointer-events-none, behind all content. The locked hero paints its
- * own opaque ground, so this runs everywhere except there.
+ * Motion: slow drift dominates, breathing on the source's 7s pulse envelope.
+ * Nothing strobes.
  */
 
-type Beam = {
-  top: number;
+type Line = {
+  topPct: number;
+  leftPct: number;
+  widthPct: number;
   rotate: number;
-  /** Seconds for one drift pass. */
-  duration: number;
-  driftDelay: number;
-  /** Staggered from the source's 2.2s / 4.4s pulse offsets. */
-  pulseDelay: number;
   thickness: number;
   color: string;
   glow: string;
   blur: number;
+  duration: number;
+  driftDelay: number;
+  pulseDelay: number;
 };
 
-/* Gold leads: the heaviest, most numerous beams carry the field. Teal/ice run
-   as fine 1px secondaries, interleaved early enough that they survive the
-   density slice on narrow viewports rather than dropping out entirely. */
-const BEAMS: Beam[] = [
-  { top: 6, rotate: -18, duration: 34, driftDelay: -4, pulseDelay: 0, thickness: 2, color: 'rgba(255, 212, 122, 0.95)', glow: 'rgba(245, 181, 61, 0.75)', blur: 26 },
-  { top: 17, rotate: -14, duration: 52, driftDelay: -18, pulseDelay: -2.2, thickness: 3, color: 'rgba(245, 181, 61, 0.95)', glow: 'rgba(245, 181, 61, 0.65)', blur: 30 },
-  // Ice secondary — fine, cooler, deliberately quieter than the gold.
-  { top: 24, rotate: -16, duration: 58, driftDelay: -11, pulseDelay: -3.6, thickness: 1, color: 'rgba(150, 232, 255, 0.55)', glow: 'rgba(34, 211, 238, 0.35)', blur: 18 },
-  { top: 34, rotate: -20, duration: 41, driftDelay: -9, pulseDelay: -4.4, thickness: 3, color: 'rgba(255, 196, 90, 1)', glow: 'rgba(255, 196, 90, 0.7)', blur: 30 },
-  { top: 45, rotate: -12, duration: 63, driftDelay: -26, pulseDelay: -1.1, thickness: 2, color: 'rgba(185, 120, 26, 0.95)', glow: 'rgba(245, 181, 61, 0.55)', blur: 22 },
-  // Ice secondary.
-  { top: 55, rotate: -10, duration: 71, driftDelay: -34, pulseDelay: -6.1, thickness: 1, color: 'rgba(185, 240, 255, 0.45)', glow: 'rgba(34, 211, 238, 0.28)', blur: 16 },
-  { top: 64, rotate: -9, duration: 57, driftDelay: -31, pulseDelay: -5.5, thickness: 3, color: 'rgba(245, 181, 61, 1)', glow: 'rgba(245, 181, 61, 0.72)', blur: 32 },
-  { top: 76, rotate: -15, duration: 38, driftDelay: -7, pulseDelay: -2.8, thickness: 2, color: 'rgba(255, 196, 90, 0.9)', glow: 'rgba(255, 196, 90, 0.6)', blur: 24 },
-  { top: 87, rotate: -11, duration: 60, driftDelay: -22, pulseDelay: -4.9, thickness: 2, color: 'rgba(255, 212, 122, 0.85)', glow: 'rgba(245, 181, 61, 0.55)', blur: 26 },
+/** Deterministic PRNG — a stable field, no randomness during render. */
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const GOLD = [
+  { color: 'rgba(255, 212, 122, ', glow: 'rgba(245, 181, 61, ' },
+  { color: 'rgba(245, 181, 61, ', glow: 'rgba(245, 181, 61, ' },
+  { color: 'rgba(255, 196, 90, ', glow: 'rgba(255, 196, 90, ' },
+  { color: 'rgba(212, 160, 60, ', glow: 'rgba(212, 160, 60, ' },
 ];
+
+/** Teal skewing spring-green through cyan, as the two reference screens do. */
+const TEAL = [
+  { color: 'rgba(120, 240, 210, ', glow: 'rgba(80, 220, 190, ' },
+  { color: 'rgba(150, 232, 255, ', glow: 'rgba(34, 211, 238, ' },
+  { color: 'rgba(110, 230, 180, ', glow: 'rgba(90, 210, 165, ' },
+];
+
+function buildField(count: number): Line[] {
+  const rand = mulberry32(0x5eed);
+  // 3–5 hero beams per screen regardless of population size.
+  const heroCount = Math.max(3, Math.min(5, Math.round(count * 0.14)));
+  const heroIdx = new Set<number>();
+  while (heroIdx.size < heroCount) heroIdx.add(Math.floor(rand() * count));
+
+  return Array.from({ length: count }, (_, i) => {
+    const isHero = heroIdx.has(i);
+    // Gold leads at exactly 70%. Deterministic by index rather than a coin
+    // flip, so the ratio still holds at the small counts a Fold cover screen
+    // gets — a probabilistic split drifted to 91:9 at 12 lines.
+    const isGold = i % 10 >= 3;
+    const palette = isGold ? GOLD : TEAL;
+    const tone = palette[Math.floor(rand() * palette.length)];
+
+    // Angles spread across the full range so lines genuinely cross rather
+    // than running parallel.
+    const rotate = Math.round(-90 + rand() * 180);
+
+    const alpha = isHero ? 0.85 + rand() * 0.15 : 0.3 + rand() * 0.3;
+    const glowA = isHero ? 0.5 + rand() * 0.2 : 0.16 + rand() * 0.14;
+
+    return {
+      // Overscan the placement box so many lines start and end off-screen.
+      topPct: -12 + rand() * 124,
+      leftPct: -30 + rand() * 70,
+      widthPct: 40 + rand() * 90,
+      rotate,
+      thickness: isHero ? 2 : 1,
+      color: `${tone.color}${alpha.toFixed(2)})`,
+      glow: `${tone.glow}${glowA.toFixed(2)})`,
+      blur: isHero ? 22 + rand() * 12 : 8 + rand() * 8,
+      duration: 34 + rand() * 46,
+      driftDelay: -rand() * 40,
+      pulseDelay: -rand() * 7,
+    };
+  });
+}
 
 export function AtmosphereLayer() {
   // Density scales down on narrow viewports and reflows live when a foldable
   // opens or closes — no reload, no load-time width assumption.
   const { beams, particles } = useAtmosphereDensity();
+  const lines = useMemo(() => buildField(beams), [beams]);
 
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      {/* Base wash. Source uses a purple radial over near-black; same shape,
-          warm hue. */}
+      {/* Near-black ground. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(120% 80% at 50% 0%, rgba(96, 58, 10, 0.34) 0%, rgba(14, 10, 5, 0.96) 48%, #050308 100%)',
+            'radial-gradient(120% 80% at 50% 0%, rgba(96, 58, 10, 0.22) 0%, rgba(12, 9, 5, 0.97) 46%, #050308 100%)',
         }}
       />
 
-      {/* Aura orbs — the source's 42rem / 48rem blurred radials. These carry
-          most of the depth. */}
+      {/* Aura orbs — depth at the edges, colour off the content. */}
       <div
         className="zayra-aura absolute -top-32 -left-32 h-[42rem] w-[42rem] rounded-full blur-3xl"
         style={{
           background:
-            'radial-gradient(circle, rgba(245, 181, 61, 0.30) 0%, rgba(245, 181, 61, 0) 70%)',
+            'radial-gradient(circle, rgba(245, 181, 61, 0.24) 0%, rgba(245, 181, 61, 0) 70%)',
         }}
       />
       <div
         className="zayra-aura absolute -right-40 -bottom-40 h-[48rem] w-[48rem] rounded-full blur-3xl"
         style={{
           background:
-            'radial-gradient(circle, rgba(255, 196, 90, 0.28) 0%, rgba(255, 196, 90, 0) 70%)',
+            'radial-gradient(circle, rgba(255, 196, 90, 0.22) 0%, rgba(255, 196, 90, 0) 70%)',
           animationDelay: '-3s',
         }}
       />
-      <div
-        className="zayra-aura absolute top-1/3 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full blur-3xl"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(185, 120, 26, 0.16) 0%, rgba(185, 120, 26, 0) 70%)',
-          animationDelay: '-1.5s',
-        }}
-      />
 
-      {/* Faint ice horizon — a linear highlight, not an orb. Straight from
-          ZayraBrandBackground, which places one at the upper third. */}
+      {/* Faint ice horizon — linear highlight, not an orb. */}
       <div
         className="absolute inset-x-0 top-1/3 h-px opacity-60"
         style={{
@@ -112,72 +148,63 @@ export function AtmosphereLayer() {
         }}
       />
 
-      {/* Circuit grid — 64px, masked to centre, exactly as the source. */}
+      {/* Barely-there grid — texture, not feature. */}
       <div
-        className="absolute inset-0 opacity-[0.09]"
+        className="absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(245, 181, 61, 0.55) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245, 181, 61, 0.55) 1px, transparent 1px)
+            linear-gradient(rgba(245, 181, 61, 0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(245, 181, 61, 0.5) 1px, transparent 1px)
           `,
           backgroundSize: '64px 64px',
           maskImage:
-            'radial-gradient(ellipse at center, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 75%)',
+            'radial-gradient(ellipse at 50% 78%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse at center, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 75%)',
+            'radial-gradient(ellipse at 50% 78%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
 
-      {/* Drifting node dots. */}
+      {/* Node dots. */}
       <PremiumParticles count={particles} />
 
-      {/* Diagonal beams — travel along their own axis while the source's 7s
-          pulse envelope breathes them. */}
-      {BEAMS.slice(0, beams).map((beam, i) => (
+      {/* The line field. */}
+      {lines.map((l, i) => (
         <div
           key={i}
-          className="laser-line absolute -left-1/4 w-[150%]"
+          className="laser-line absolute"
           style={{
-            top: `${beam.top}%`,
-            height: `${beam.thickness}px`,
+            top: `${l.topPct}%`,
+            left: `${l.leftPct}%`,
+            width: `${l.widthPct}%`,
+            height: `${l.thickness}px`,
             // Standalone `rotate` — the drift animation owns `transform`.
-            rotate: `${beam.rotate}deg`,
-            animationDuration: `${beam.duration}s, 7s`,
-            animationDelay: `${beam.driftDelay}s, ${beam.pulseDelay}s`,
-            background: `linear-gradient(90deg, transparent 0%, ${beam.color} 45%, ${beam.color} 55%, transparent 100%)`,
-            boxShadow: `0 0 ${beam.blur}px ${beam.glow}, 0 0 ${beam.blur * 2.5}px ${beam.glow}`,
+            rotate: `${l.rotate}deg`,
+            animationDuration: `${l.duration}s, 7s`,
+            animationDelay: `${l.driftDelay}s, ${l.pulseDelay}s`,
+            background: `linear-gradient(90deg, transparent 0%, ${l.color} 18%, ${l.color} 82%, transparent 100%)`,
+            boxShadow: `0 0 ${l.blur}px ${l.glow}`,
           }}
         />
       ))}
 
-      {/* Slow scan sweep — the source's 9s linear pass. */}
-      <div className="absolute inset-0 opacity-50 motion-reduce:hidden">
+      {/* Slow scan sweep. */}
+      <div className="absolute inset-0 opacity-40 motion-reduce:hidden">
         <div
           className="zayra-scanline absolute inset-x-0 h-[2px]"
           style={{
             background:
-              'linear-gradient(90deg, transparent 0%, rgba(255, 212, 122, 0.7) 50%, transparent 100%)',
-            boxShadow: '0 0 18px rgba(255, 212, 122, 0.6)',
+              'linear-gradient(90deg, transparent 0%, rgba(255, 212, 122, 0.6) 50%, transparent 100%)',
+            boxShadow: '0 0 18px rgba(255, 212, 122, 0.5)',
           }}
         />
       </div>
 
-      {/* Top edge glow. */}
-      <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{
-          background:
-            'linear-gradient(90deg, transparent 0%, rgba(245, 181, 61, 0.85) 50%, transparent 100%)',
-          boxShadow: '0 0 32px rgba(245, 181, 61, 0.65)',
-        }}
-      />
-
-      {/* Vignette for readability. */}
+      {/* Vignette. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.62) 100%)',
+            'radial-gradient(ellipse at center, rgba(0,0,0,0) 42%, rgba(0,0,0,0.6) 100%)',
         }}
       />
     </div>

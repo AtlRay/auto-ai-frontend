@@ -36,8 +36,10 @@ export function useViewportWidth(): number {
  */
 export function useAtmosphereDensity() {
   const width = useViewportWidth();
-  if (width < 400) return { beams: 4, particles: 20 };
-  if (width < 700) return { beams: 6, particles: 32 };
-  if (width < 1100) return { beams: 7, particles: 44 };
-  return { beams: 9, particles: 56 };
+  // Line counts calibrated to the reference: ~30 at desktop, ~10-14 on a
+  // Fold cover screen. Node dots held at the reference's 10-15 at desktop.
+  if (width < 400) return { beams: 12, particles: 7 };
+  if (width < 700) return { beams: 18, particles: 9 };
+  if (width < 1100) return { beams: 24, particles: 12 };
+  return { beams: 30, particles: 14 };
 }
