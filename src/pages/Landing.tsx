@@ -1,6 +1,6 @@
 import ElectricWordmark from '@/components/brand/ElectricWordmark';
 import ConstellationField from '@/components/hero/ConstellationField';
-import { ROSTER } from '@/lib/roster';
+import { ROSTER, STATUS_LABEL } from '@/lib/roster';
 
 /**
  * Landing page.
@@ -104,12 +104,16 @@ export function Landing() {
           The roster
         </h2>
         <p className="mb-10 text-sm text-white/40">
-          Five agents. The roster is closed.
+          Five agents. The roster is closed.{' '}
+          <a href="/roster" className="text-[#ffd47a]/80 underline underline-offset-2 hover:text-[#ffd47a]">
+            See what each one actually runs
+          </a>
+          .
         </p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {ROSTER.map((member) => {
-            const realized = member.status === 'realized';
+            const realized = member.status !== 'in-training';
             return (
               <div
                 key={member.name}
@@ -127,14 +131,10 @@ export function Landing() {
                     without one get a neutral rule, not a borrowed hue. */}
                 <div
                   className="mb-3 h-1 w-8 rounded-full"
-                  style={
-                    member.accent
-                      ? {
-                          background: member.accent,
-                          boxShadow: `0 0 12px ${member.accent}`,
-                        }
-                      : { background: 'rgba(255,255,255,0.14)' }
-                  }
+                  style={{
+                    background: member.accent,
+                    boxShadow: `0 0 12px ${member.accent}`,
+                  }}
                 />
 
                 <h3
@@ -144,14 +144,15 @@ export function Landing() {
                   {member.name}
                 </h3>
 
-                {member.role && (
-                  <p className="mb-1.5 text-[0.7rem] tracking-[0.12em] text-white/35 uppercase">
-                    {member.role}
-                  </p>
-                )}
+                <p className="mb-1.5 text-[0.7rem] tracking-[0.12em] text-white/35 uppercase">
+                  {member.title}
+                </p>
 
-                <p className="text-xs leading-relaxed text-white/45">
-                  {member.copy ?? 'Joining the pack.'}
+                <p className="mb-2 text-xs leading-relaxed text-white/45">
+                  {member.copy}
+                </p>
+                <p className="mt-auto text-[10px] tracking-wide text-white/30 uppercase">
+                  {STATUS_LABEL[member.status]}
                 </p>
               </div>
             );

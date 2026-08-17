@@ -1,62 +1,129 @@
 /**
- * The character roster — locked at five. No additions.
+ * The house roster — locked at FIVE. No additions.
  *
- * Every field here is either verified or deliberately absent. Cache and Aegis
- * have no confirmed role, colour, or art, so they carry none: they render as
- * silhouettes rather than have descriptions invented for them.
+ * HOUSE LAW: a character "works" only when a real system runs under them.
+ * Presence without function is shown honestly as "in training". No fake jobs.
+ *
+ * IMPORTANT — this file describes THIS app, not V1.
+ * The activation order lists what each character does on the Lovable V1
+ * surface. This is a different surface, so every status below is what is
+ * actually running here. Copying V1's "working today" list onto this roster
+ * would claim function this app does not have, which is exactly the
+ * fabrication the law forbids.
  */
+
+export type CharacterStatus =
+  /** A real system runs under them in THIS app. */
+  | 'active-here'
+  /** They work, but on another surface — not in this app. */
+  | 'elsewhere'
+  /** No system under them yet, anywhere in this app. */
+  | 'in-training';
 
 export type RosterMember = {
   name: string;
-  /** Present only where the role is verified. */
-  role: string | null;
-  /** Verified one-liner. */
-  copy: string | null;
-  /** Accent colour, or null where none is confirmed. */
-  accent: string | null;
-  status: 'realized' | 'name-only';
+  /** House title. */
+  title: string;
+  role: string;
+  copy: string;
+  status: CharacterStatus;
+  /** Accent used in this app. */
+  accent: string;
+  /** False where the colour is still a candidate awaiting a ruling. */
+  accentLocked: boolean;
+  accentNote?: string;
+  /** Systems genuinely running under them here. */
+  worksHere: string[];
+  /** Named jobs with no system behind them yet. */
+  inTraining: string[];
+  /** Where their work actually lives, when it isn't here. */
+  elsewhereNote?: string;
 };
 
 export const ROSTER: RosterMember[] = [
   {
     name: 'Zayra',
+    title: 'The Brain',
     role: 'AI co-founder',
-    copy: 'The Founder Operating System. Carries your business between sessions.',
-    // Per-platform law: violet is her canonical accent on this platform,
-    // matching the AAT landing portrait. Cyan is her other-rooms variant.
-    accent: '#9f38fa',
-    status: 'realized',
+    copy: 'One brain, every app. She carries your business between sessions.',
+    status: 'active-here',
+    // Her IDENTITY colour is cyan; the purple render is her platform outfit
+    // here, per the per-platform law. The roster dot shows identity, the
+    // portrait shows the outfit — see the report accompanying this change.
+    accent: '#5ff2ff',
+    accentLocked: true,
+    accentNote: 'Cyan identity · purple render on this platform',
+    worksHere: ['Presence layer — orb, panel, wake phrase'],
+    inTraining: [
+      'Chat',
+      'Voice',
+      'Research engine',
+      'Mailbox',
+      'Form-fill hands',
+      'Morning brief',
+    ],
   },
   {
     name: 'Chachy',
+    title: 'The Hunter',
     role: 'Sales hunter',
     copy: 'The Digital Wolf. Hunts leads so you are not cold-calling alone.',
-    // Locked: electric violet — Chachy's own identity, not Zayra's.
+    status: 'elsewhere',
     accent: '#a855f7',
-    status: 'realized',
-  },
-  {
-    name: 'Vera',
-    role: 'Truth-checker',
-    copy: 'Screens every message so nothing reads as AI slop.',
-    // CANDIDATE COLOUR, not formally locked. Icy white-blue taken from Vera's
-    // existing art — deliberately colder and whiter than Zayra's saturated
-    // cyan (#22d3ee), which stays Zayra's alone.
-    accent: '#b9e6ff',
-    status: 'realized',
-  },
-  {
-    name: 'Cache',
-    role: null,
-    copy: null,
-    accent: null,
-    status: 'name-only',
+    accentLocked: true,
+    worksHere: [],
+    inTraining: ['CRM touchpoints inside this app'],
+    elsewhereNote: 'His CRM runs on his own product, not on this surface.',
   },
   {
     name: 'Aegis',
-    role: null,
-    copy: null,
-    accent: null,
-    status: 'name-only',
+    title: 'The Shield',
+    role: 'Compliance & deadlines',
+    copy: 'Watches filing status, renewals and deadlines so none of them pass quietly.',
+    status: 'in-training',
+    accent: '#9aa3ad',
+    accentLocked: false,
+    accentNote: 'Candidate — steel with amber warning glow, pending a ruling',
+    worksHere: [],
+    inTraining: [
+      'Deadline Ledger — first shippable job, queued on V1',
+      'A2P / SMS compliance',
+    ],
+  },
+  {
+    name: 'Vera',
+    title: 'The Truth',
+    role: 'Truth-checker',
+    copy: 'Screens every message so nothing reads as AI slop.',
+    status: 'in-training',
+    accent: '#b9e6ff',
+    accentLocked: false,
+    accentNote: 'Candidate — arctic ice, never Zayra’s cyan, pending a ruling',
+    worksHere: [],
+    inTraining: [
+      'Outbound draft checks — first shippable job, queued on V1',
+      'Review responses',
+    ],
+  },
+  {
+    name: 'Cache',
+    title: 'The Money',
+    role: 'Money awareness',
+    copy: 'Keeps sight of what came in and what renews next. Never a guessed number.',
+    status: 'in-training',
+    accent: '#34d399',
+    accentLocked: false,
+    accentNote: 'Candidate — emerald, kept off the house gold, pending a ruling',
+    worksHere: [],
+    inTraining: [
+      'Cache Ledger, read-only — first shippable job, queued on V1',
+      'Payments and rebilling',
+    ],
   },
 ];
+
+export const STATUS_LABEL: Record<CharacterStatus, string> = {
+  'active-here': 'Working here',
+  elsewhere: 'Works elsewhere',
+  'in-training': 'In training',
+};

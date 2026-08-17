@@ -13,6 +13,7 @@ import FounderEngine from '@/pages/app/FounderEngine';
 import { ALL_DESTINATIONS } from '@/config/destinations';
 import Landing from '@/pages/Landing';
 import Usage from '@/pages/Usage';
+import Roster from '@/pages/Roster';
 
 /**
  * Two shells.
@@ -59,6 +60,14 @@ export function App() {
           element={
             <PublicLayout>
               <Usage />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/roster"
+          element={
+            <PublicLayout>
+              <Roster />
             </PublicLayout>
           }
         />
