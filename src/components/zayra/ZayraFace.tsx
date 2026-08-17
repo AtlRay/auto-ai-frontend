@@ -69,7 +69,14 @@ export function ZayraFace({
           decoding="async"
           onError={() => setHasRender(false)}
           className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: '50% 20%', transform: 'scale(1.7)' }}
+          // Tuned against the committed 1672x941 render. Note: with a 16:9
+          // source in a square container, object-position's Y value has no
+          // effect — cover matches height exactly, so only X overflows.
+          // Vertical framing therefore comes from translateY, not Y%.
+          style={{
+            objectPosition: '66% 50%',
+            transform: 'scale(2.6) translateY(6%)',
+          }}
         />
       )}
       {/* Cyan source-glow wash, strongest around the eyes */}
