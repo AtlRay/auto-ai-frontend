@@ -86,7 +86,8 @@ export const ROSTER: RosterMember[] = [
     accentNote: 'Candidate — steel with amber warning glow, pending a ruling',
     worksHere: [],
     inTraining: [
-      'Deadline Ledger — first shippable job, queued on V1',
+      'Deadline Ledger — part of the Aegis hub, being built on V1',
+      'Formation and trademark protection — same hub',
       'A2P / SMS compliance',
     ],
   },

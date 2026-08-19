@@ -17,6 +17,8 @@ Legend:
 - **WIRE OR CUT** — currently a placeholder, stub, or inert control. Must be
   wired before launch, or removed from the build.
 - **BLOCKED** — waiting on a decision or an external dependency.
+- **AWAITING V1** — being proven on Lovable V1 first. Deliberately absent
+  here. Do not build ahead of it. See section 7.
 
 Last audited against the repo: see git log for this file.
 
@@ -53,7 +55,7 @@ Last audited against the repo: see git log for this file.
 | Operate | `/operate` | **WIRE OR CUT** | Placeholder. |
 | Research & Invest | `/opportunity-os` | **BLOCKED** | Must consume the Research Engine via the shared brain. Never own stubs. Not started by design. |
 | Workspace | `/zayra-cloud` | **WIRE OR CUT** | Placeholder. |
-| Entity Launchpad | `/entity-launchpad` | **WIRE OR CUT** | Placeholder. |
+| Entity Launchpad | `/entity-launchpad` | **WIRE OR CUT** | Placeholder. The Aegis hub lands here — see section 7. Do not build ahead of it. |
 | Commerce Launchpad | `/commerce-launchpad` | **WIRE OR CUT** | Placeholder. |
 | Zayra Media | `/zayra-media` | **WIRE OR CUT** | Placeholder. |
 | Command Center | `/dashboard` | **WIRE OR CUT** | Placeholder. Ruled legacy — strongest candidate to cut outright. |
@@ -97,9 +99,32 @@ Last audited against the repo: see git log for this file.
 
 ---
 
+## 7. Future ports — tracked, not built
+
+Surfaces being proven on V1 first. These are **deliberately absent here**, and
+that absence is correct: building a second design ahead of the V1 flow is the
+thing this section exists to prevent. Each ports across once V1's flow is
+proven, per V2-Better law.
+
+| Item | Built on | Ports to | Status |
+|---|---|---|---|
+| **Aegis hub** — formation + Deadline Ledger + trademark protection, unified under one shield page | Lovable V1, in progress | The founder flow here (stage 4 "Formation" is the entry point) and `/entity-launchpad` | **AWAITING V1** — do not design a competing version, do not scaffold its three parts separately |
+
+Rules that apply to everything in this table:
+
+- **Do not build ahead of it.** No stubs, no "temporary" version, no partial
+  scaffold of one component.
+- **Do not design a parallel version.** When it ports, it ports as proven —
+  not merged against a second design invented here.
+- The surfaces it will land on stay honest placeholders until then, exactly as
+  section 3 records them.
+
+---
+
 ## What this law implies right now
 
-Counted from the tables above — 43 rows in total:
+Counted from the wiring tables in sections 1–6 — 43 rows in total (section 7
+tracks work that is deliberately not here yet, so it is not counted):
 
 | Status | Rows |
 |---|---|

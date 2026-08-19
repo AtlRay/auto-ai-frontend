@@ -35,6 +35,12 @@ export const MAIN_ITEMS: Destination[] = [
 ];
 
 export const MORE_ITEMS: Destination[] = [
+  // STANDING CONSTRAINT — read before porting this surface.
+  // Lovable is building the AEGIS HUB in V1 right now: formation, the Deadline
+  // Ledger and trademark protection unified under one shield page. Do NOT
+  // design a competing version here, and do not scaffold any of its three
+  // parts separately. When V1's flow is proven it ports across per V2-Better
+  // law. Until then this stays an honest placeholder — tracked, not built.
   { title: 'Entity Launchpad', url: '/entity-launchpad', desc: 'Business setup & filing' },
   { title: 'Commerce Launchpad', url: '/commerce-launchpad', desc: 'Offers & payments' },
   { title: 'Zayra Media', url: '/zayra-media', desc: 'Newsroom & content' },

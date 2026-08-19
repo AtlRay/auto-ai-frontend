@@ -11,6 +11,11 @@ import { useZayraPresence } from '@/hooks/useZayraPresence';
  *
  * ALPHA SAFETY LOCK: live filing is off. This prepares a draft and says so.
  * Nothing here submits to any state, and no wording implies it does.
+ *
+ * FUTURE PORT — do not build ahead of it. Formation is one third of the AEGIS
+ * HUB that Lovable is building on V1 (formation + Deadline Ledger + trademark
+ * protection, unified under one shield page). This stage is the port target,
+ * not a place to invent a second design. See V2-AUTOMATION-GATE.md.
  */
 function FormationForm() {
   const { setOpen, setCaption } = useZayraPresence();
