@@ -14,6 +14,7 @@ import { ALL_DESTINATIONS } from '@/config/destinations';
 import Landing from '@/pages/Landing';
 import Usage from '@/pages/Usage';
 import Roster from '@/pages/Roster';
+import Login from '@/pages/Login';
 
 /**
  * Two shells.
@@ -71,6 +72,17 @@ export function App() {
             </PublicLayout>
           }
         />
+        {/* The way in. `/signup` is the same screen in create-account mode so
+            the header CTA and the hero CTA can land on the right tab. */}
+        <Route
+          path="/login"
+          element={
+            <PublicLayout>
+              <Login />
+            </PublicLayout>
+          }
+        />
+        <Route path="/signup" element={<Navigate to="/login?mode=signup" replace />} />
 
         {/* Signed-in destinations, inside the ported app shell. */}
         <Route element={<AppShell />}>

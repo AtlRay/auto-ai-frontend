@@ -53,8 +53,8 @@ export function AskZayraPanel() {
               Zayra's conversational layer isn't connected in this build yet.
             </p>
             <p className="text-xs leading-relaxed text-white/45">
-              This panel is the only surface that carries the cosmic indigo and
-              gold treatment.
+              She’ll answer here once the shared brain is wired up. Nothing you
+              type would reach her yet, so there’s no box to type in.
             </p>
           </div>
         </div>

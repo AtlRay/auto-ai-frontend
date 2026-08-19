@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import ElectricWordmark from '@/components/brand/ElectricWordmark';
 import ConstellationField from '@/components/hero/ConstellationField';
 import { ROSTER, STATUS_LABEL } from '@/lib/roster';
@@ -48,15 +49,20 @@ export function Landing() {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="#access"
+            <Link
+              to="/login"
               className="hero-cta inline-flex min-h-11 items-center rounded-lg bg-gradient-to-r from-[#eaffff] to-[#3fd6ff] px-7 py-3.5 text-sm font-medium text-[#04222b] shadow-[0_0_26px_rgba(63,214,255,0.35)]"
             >
               Enter Founder OS &rarr;
-            </a>
+            </Link>
+            {/* No trailer exists, so this must not look clickable. Matches the
+                in-app header's treatment: dimmed, not-allowed, honest title.
+                Wire it and re-enable when a trailer actually ships. */}
             <button
               type="button"
-              className="inline-flex min-h-11 items-center rounded-lg border border-white/20 bg-black/30 px-7 py-3.5 text-sm text-gray-200 transition hover:border-white/40 hover:bg-black/50"
+              disabled
+              title="Not available yet"
+              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-lg border border-white/10 bg-black/20 px-7 py-3.5 text-sm text-white/25"
             >
               Watch the trailer
             </button>
@@ -64,8 +70,6 @@ export function Landing() {
         </div>
       </section>
 
-      {/* ACCESS anchor for the primary CTA. */}
-      <div id="access" className="scroll-mt-24" />
 
       {/* WHAT ZAYRA IS -------------------------------------------------- */}
       <section id="what-zayra-is" className="mx-auto max-w-6xl px-6 py-20">

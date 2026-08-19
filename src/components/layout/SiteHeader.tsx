@@ -29,7 +29,7 @@ export function SiteHeader() {
             The roster
           </a>
           <a
-            href="#access"
+            href="/login?mode=signup"
             className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-[#f5b53d]/40 px-4 text-[#ffd47a] transition hover:border-[#f5b53d]/70 hover:bg-[#f5b53d]/10"
           >
             Request access

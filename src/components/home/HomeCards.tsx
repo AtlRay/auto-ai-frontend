@@ -152,15 +152,29 @@ export function StarterPrompts() {
 
 /* ------------------------------------------------------ platform status */
 
+/**
+ * HONEST MOCKUPS STANDARD.
+ *
+ * A green tick means a founder can use it ON THIS SURFACE, today. This list was
+ * ported from V1, where the entries below were true; here five of them were
+ * not, which is exactly the claim the landing page promises we never make.
+ *
+ * Zayra Cloud and Zayra Media are real destinations whose screens are not
+ * ported — they move to "in training". Lawns & Trees Proof-of-Concept, Zayra
+ * Platform Guide and Founder Scholar Q&A do not exist anywhere in this app, so
+ * they are removed outright rather than relabelled. Absent beats mislabelled.
+ *
+ * Before adding to AVAILABLE: open the route and use the thing. If it needs a
+ * backend this app cannot reach, it is not available here.
+ */
 const AVAILABLE = [
-  'Founder Engine',
-  'Zayra Cloud',
-  'Zayra Media',
-  'Entity Draft Prep',
-  'Lawns & Trees Proof-of-Concept',
-  'Zayra Platform Guide',
-  'Founder Scholar Q&A',
+  'AI Builder — idea capture',
+  'Entity Draft Prep — formation draft',
+  'Zayra presence — orb and panel',
 ];
+
+/** Named, in the nav, no working screen on this surface yet. */
+const IN_TRAINING = ['Zayra Cloud', 'Zayra Media', 'Zayra chat'];
 
 const LOCKED = ['Live Filing', 'Payments', 'Trading', 'Auto-Posting', 'Admin Tools'];
 
@@ -177,7 +191,7 @@ export function PlatformStatus() {
         Some tools are intentionally locked while Auto AI Technologies™ tests the
         founder experience with the first alpha users.
       </p>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
           <div className="mb-2 text-[10px] tracking-[0.2em] text-emerald-300 uppercase">
             Available
@@ -186,6 +200,24 @@ export function PlatformStatus() {
             {AVAILABLE.map((item) => (
               <li key={item} className="flex items-center gap-2 text-xs text-white/80">
                 <span aria-hidden="true" className="text-emerald-400">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-[10px] leading-relaxed text-white/30">
+            Drafts aren’t saved between visits yet.
+          </p>
+        </div>
+        <div>
+          <div className="mb-2 text-[10px] tracking-[0.2em] text-white/45 uppercase">
+            In Training
+          </div>
+          <ul className="space-y-1.5">
+            {IN_TRAINING.map((item) => (
+              <li key={item} className="flex items-center gap-2 text-xs text-white/45">
+                <span aria-hidden="true" className="text-white/30">
+                  ·
+                </span>
                 {item}
               </li>
             ))}

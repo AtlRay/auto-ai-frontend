@@ -13,8 +13,8 @@
 //   - unlockZayraAudio / speak -> no voice provider is wired, so the greeting
 //     is shown as text rather than a "tap to play" chip that would imply
 //     audio is coming.
-//   - signed-out routes to the access anchor, since /login does not exist in
-//     this rebuild's route map yet.
+//   - signed-out routes to /login. It stores auth_return_url first, and
+//     /login sends the founder back to exactly where they tapped.
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useZayraPresence } from '@/hooks/useZayraPresence';
@@ -81,7 +81,7 @@ export function WakeZayraOrb() {
       } catch {
         /* storage unavailable — return url simply is not restored */
       }
-      navigate('/#access');
+      navigate('/login');
       return;
     }
     const line = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
