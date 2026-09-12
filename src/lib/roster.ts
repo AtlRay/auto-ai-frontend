@@ -4,6 +4,18 @@
  * HOUSE LAW: a character "works" only when a real system runs under them.
  * Presence without function is shown honestly as "in training". No fake jobs.
  *
+ * CANONICAL JOBS (house context, 12 Sep 2026). These are what each character
+ * IS across the ecosystem — not a claim about what runs on this surface:
+ *   Zayra  — AI CEO / Digital COO. Runs the business. The core product.
+ *   Chachy — sales hunter: lead scanning, scoring, outreach. Lives BOTH inside
+ *            the main app AND as a separate paid product, Chachy Hunter Core.
+ *   Vera   — truth-checker. Screens Chachy's outreach for AI slop before send.
+ *   Cache  — cash / runway tracker. Lives inside Zayra.
+ *   Aegis  — compliance guardian: filing deadlines, contract risk,
+ *            registered-agent status. Lives inside Zayra.
+ * Keep `copy` and `role` below faithful to these. The `status` fields are a
+ * separate question and answer only for this app.
+ *
  * IMPORTANT — this file describes THIS app, not V1.
  * The activation order lists what each character does on the Lovable V1
  * surface. This is a different surface, so every status below is what is
@@ -44,8 +56,8 @@ export const ROSTER: RosterMember[] = [
   {
     name: 'Zayra',
     title: 'The Brain',
-    role: 'AI co-founder',
-    copy: 'One brain, every app. She carries your business between sessions.',
+    role: 'AI CEO · Digital COO',
+    copy: 'One brain, every app. She runs the business with you and carries your context between sessions.',
     status: 'active-here',
     // Her IDENTITY colour is cyan; the purple render is her platform outfit
     // here, per the per-platform law. The roster dot shows identity, the
@@ -67,19 +79,20 @@ export const ROSTER: RosterMember[] = [
     name: 'Chachy',
     title: 'The Hunter',
     role: 'Sales hunter',
-    copy: 'The Digital Wolf. Hunts leads so you are not cold-calling alone.',
+    copy: 'The Digital Wolf. Scans, scores and works your leads so you are not cold-calling alone.',
     status: 'elsewhere',
     accent: '#a855f7',
     accentLocked: true,
     worksHere: [],
-    inTraining: ['CRM touchpoints inside this app'],
-    elsewhereNote: 'His CRM runs on his own product, not on this surface.',
+    inTraining: ['His in-app surface here — scanning, scoring, outreach'],
+    elsewhereNote:
+      'He belongs in this app too. Today he only runs as the separate paid product, Chachy Hunter Core — nothing of his is wired on this surface yet.',
   },
   {
     name: 'Aegis',
     title: 'The Shield',
-    role: 'Compliance & deadlines',
-    copy: 'Watches filing status, renewals and deadlines so none of them pass quietly.',
+    role: 'Compliance guardian',
+    copy: 'Watches filing deadlines, contract risk and registered-agent status so none of them pass quietly.',
     status: 'in-training',
     accent: '#9aa3ad',
     accentLocked: false,
@@ -88,6 +101,8 @@ export const ROSTER: RosterMember[] = [
     inTraining: [
       'Deadline Ledger — part of the Aegis hub, being built on V1',
       'Formation and trademark protection — same hub',
+      'Contract risk',
+      'Registered-agent status',
       'A2P / SMS compliance',
     ],
   },
@@ -95,22 +110,22 @@ export const ROSTER: RosterMember[] = [
     name: 'Vera',
     title: 'The Truth',
     role: 'Truth-checker',
-    copy: 'Screens every message so nothing reads as AI slop.',
+    copy: "Screens Chachy's outreach before it sends, so nothing goes out reading as AI slop.",
     status: 'in-training',
     accent: '#b9e6ff',
     accentLocked: false,
     accentNote: 'Candidate — arctic ice, never Zayra’s cyan, pending a ruling',
     worksHere: [],
     inTraining: [
-      'Outbound draft checks — first shippable job, queued on V1',
+      "Screening Chachy's outreach — first shippable job, queued on V1",
       'Review responses',
     ],
   },
   {
     name: 'Cache',
     title: 'The Money',
-    role: 'Money awareness',
-    copy: 'Keeps sight of what came in and what renews next. Never a guessed number.',
+    role: 'Cash & runway',
+    copy: 'Tracks cash in, what renews next, and how much runway that leaves. Never a guessed number.',
     status: 'in-training',
     accent: '#34d399',
     accentLocked: false,
@@ -118,6 +133,7 @@ export const ROSTER: RosterMember[] = [
     worksHere: [],
     inTraining: [
       'Cache Ledger, read-only — first shippable job, queued on V1',
+      'Runway tracking',
       'Payments and rebilling',
     ],
   },
